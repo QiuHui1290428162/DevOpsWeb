@@ -1,45 +1,59 @@
 <template>
+  <!-- 主体容器，绑定了加载状态 -->
   <div v-loading="loading" class="cm-table">
     <!--表格栏-->
+    <!-- :data  绑定表格数据
+     v-bind 绑定所有父组件传递的属性
+     @selection-change 行选择改变时触发的事件 -->
     <el-table
         :data="data.content"
         class="cm-table__tb"
         v-bind="$attrs"
         @selection-change="selectionChange"
     >
+      <!-- 根据columns数组动态生成表格列 -->
       <el-table-column v-for="column in columns" :key="column.prop" v-bind="column">
+        <!-- 对于有自定义插槽的列，使用插槽内容 -->
         <template v-if="$slots[`${column.prop}Slot`]" #default="scope">
           <slot :name="`${column.prop}Slot`" :scope="scope"/>
         </template>
       </el-table-column>
+      <!-- 操作列，条件渲染，显示编辑和删除等操作按钮 -->
+      <!-- v-if  只有当showOperation为true时显示操作列
+      :label 列标题
+      :width 列宽度
+      -->
       <el-table-column
           v-if="showOperation"
           fixed="right"
           :label="t('action.operation')"
           :width="oprWidth"
       >
+        <!-- 默认模板插槽，用于显示操作按钮 -->
         <template #default="{ row }">
+          <!-- 遍历操作数组，为每种操作类型创建按钮 -->
           <template v-for="(opr, i) in operations" :key="i">
-            <template v-if="isShow(opr.show, row)">
+            <!-- 根据条件显示按钮 -->
+            <template v-if="isShow(opr.show, row) && $hasBP(opr.perm)">
+              <!-- 编辑按钮 -->
               <el-button
                   v-if="opr.type === 'edit'"
                   type="text"
-                  :disabled="$hasBP(opr.perm)  === false"
                   @click="handleEdit(row)"
               >{{ t('action.edit') }}
               </el-button>
+              <!-- 删除按钮 -->
               <el-button
                   v-else-if="opr.type === 'delete'"
                   type="text"
                   class="danger"
-                  :disabled="$hasBP(opr.perm)  === false"
                   @click="handleDelete(row)"
               >{{ t('action.delete') }}
               </el-button>
+              <!-- 自定义按钮 -->
               <el-button
                   v-else
                   type="text"
-                  :disabled="$hasBP(opr.perm)  === false"
                   @click="opr.onClick(row)"
               >{{ opr.label }}
               </el-button>
@@ -50,15 +64,27 @@
     </el-table>
     <!--分页栏-->
     <div class="cm-table__toolbar">
+      <!-- 条件渲染批量删除按钮 -->
       <template v-for="(opr, i) in operations" :key="i">
       <el-button
-          v-if="showBatchDelete && opr.type === 'delete'"
+          v-if="showBatchDelete && opr.type === 'delete' && $hasBP(opr.perm)"
           type="danger"
-          :disabled="selections.length === 0 || $hasBP(opr.perm)  === false"
+          :disabled="selections.length === 0"
           @click="handleBatchDelete()"
       >{{ t('action.batchDelete') }}
       </el-button>
       </template>
+      <!-- 分页组件 -->
+      <!-- v-if  只有当showPagination为true时显示分页组件
+      currentPage 绑定每页显示条数
+      page-size 绑定每页显示条数
+      :total 总条数
+      :page-sizes 每页显示条数
+      :page-size 每页显示条数
+      :current-page 当前页
+      @size-change 每页显示条数改变时触发
+      @current-change 当前页改变时触发
+      -->
       <el-pagination
           v-if="showPagination"
           class="cm-table__pagination"
@@ -76,53 +102,45 @@
 
 <script setup>
 const props = defineProps({
-  getPage: Function, // 获取表格分页数据的方法
-  filters: Object,
-  showPagination: {
+  getPage: Function, // 获取表格数据的方法，预期是一个异步函数
+  filters: Object, // 外部传入的过滤条件对象
+  showPagination: { // 是否显示分页组件
     type: Boolean,
     default: true
   },
-  columns: Array, // 表格列配置
-  showOperation: {
-    // 是否显示操作组件
+  columns: Array, // 表格列的配置数组
+  showOperation: { // 是否显示操作列
     type: Boolean,
     default: true,
   },
-  operations: {
+  operations: { // 操作列按钮的配置
     type: Array,
-    default: () => {
-      return [
-        {
-          type: 'edit',
-          perm:'bnt.default.update'
-        },
-        {
-          type: 'delete',
-          perm:'bnt.default.remove'
-        }
-      ]
-    }
+    default: () => [
+      { type: 'edit', perm: 'bnt.default.update' },
+      { type: 'delete', perm: 'bnt.default.remove' }
+    ]
   },
-  oprWidth: {
+  oprWidth: { // 操作列的宽度
     type: Number,
     default: 185
   },
-  showBatchDelete: {
-    // 是否显示操作组件
+  showBatchDelete: { // 是否显示批量删除按钮
     type: Boolean,
     default: true,
   },
 })
 
+// 用于接收父组件传入的参数
 const emit = defineEmits(['handleEdit', 'handleDelete']);
 
-const {t} = useI18n();
-const loading = ref(false)
-const pageRequest = reactive({
+const {t} = useI18n();  // 国际化，提取文本
+const loading = ref(false) // 控制加载状态显示
+const pageRequest = reactive({ // 分页请求参数
   pageNum: 1,
   pageSize: 10,
 })
-const data = ref({});
+const data = ref({}); // 存储从后端加载的数据
+
 
 // 分页查询
 function findPage() {
@@ -154,35 +172,38 @@ function findPage() {
 
 }
 
+// 刷新
 function reload() {
-  handlePageChange(1);
+  handlePageChange(1); // 重新加载第一页数据
 }
 
+// 更新每页显示条数,并重置第一页
 function handleSizeChange(pageSize) {
-  pageRequest.pageSize = pageSize;
-  pageRequest.pageNum = 1;
-  findPage();
+  pageRequest.pageSize = pageSize; // 更新页大小
+  pageRequest.pageNum = 1; // 重置为第一页
+  findPage(); // 重新加载数据
 }
 
 // 换页刷新
 function handlePageChange(pageNum) {
-  pageRequest.pageNum = pageNum;
-  findPage();
+  pageRequest.pageNum = pageNum; // 更新当前页码
+  findPage(); // 重新加载数据
 }
 
 function isShow(showFn, row) {
   if (showFn && typeof showFn === 'function') {
-    return showFn(row)
+    return showFn(row) // 根据函数结果决定是否显示
   }
   return true;
 }
 
 function isDisabled(disabledFn, row) {
   if (disabledFn && typeof disabledFn === 'function') {
-    return disabledFn(row)
+    return disabledFn(row) // 根据函数结果决定是否禁用
   }
   return false;
 }
+
 
 // 编辑
 function handleEdit(row) {

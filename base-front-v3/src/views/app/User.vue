@@ -13,12 +13,13 @@
         </el-form-item>
         <!-- 重置按钮 -->
         <el-form-item>
-        <el-button type="primary" @click="refreshForm" :disabled="$hasBP('bnt.sysUser.list')  === false" icon="refresh">{{ t('action.reset') }}</el-button>
+        <el-button type="primary" @click="refreshForm" v-if="$hasBP('bnt.sysUser.list')" icon="refresh">{{ t('action.reset') }}</el-button>
         </el-form-item>
         <!-- 添加按钮 -->
         <el-form-item>
-          <el-button icon="plus" type="primary" :disabled="$hasBP('bnt.sysUser.add')  === false" @click="handleAdd">{{ t('action.add') }}</el-button>
+          <el-button icon="plus" type="primary" v-if="$hasBP('bnt.sysUser.add')" @click="handleAdd">{{ t('action.add') }}</el-button>
         </el-form-item>
+
       </el-form>
     </div>
     <!--表格内容栏-->
@@ -95,7 +96,7 @@
 </template>
 
 <script setup>
-import {listPage, save, update, remove,getById} from "@/apis/app-user";
+import {listPage, save, update, remove, getById, resetPassword} from "@/apis/app-user";
 import {listSimple} from "@/apis/app-role";
 import {listTree} from "@/apis/app-dept";
 import useTableHandlers from '@/apis/use-table-handlers'
@@ -114,24 +115,26 @@ const form = reactive({
   status: true,
 });
 const {
-  t,
-  tableRef,
-  dialogVisible,
-  isEdit,
-  formLoading,
-  formRef,
-  doSearch,
-  doAdd,
-  doEdit,
-  doSubmit,
-  doRemove,
-  doClose
+  t, // 国际化函数
+  tableRef, // 表格引用
+  dialogVisible, // 控制对话框可见性
+  isEdit, // 是否为编辑模式
+  formLoading, // 表单加载状态
+  formRef, // 表单引用
+  doSearch, // 搜索函数
+  doAdd, // 添加函数
+  doEdit, // 编辑函数
+  doSubmit, // 提交函数
+  doRemove, // 删除函数
+  doResetPassword, // 重置密码
+  doClose // 关闭对话框函数
 } = useTableHandlers(form);
 
+// 定义部门数据和角色数据
 const deptData = ref([])
 const roles = ref([]);
 
-// computed
+// 计算表格列配置
 const columns = computed(() => [
   {type: "selection"},
   /* { prop: "id", label: t("thead.ID"), minWidth: 50 },*/
@@ -148,6 +151,7 @@ const columns = computed(() => [
     }
   },
 ])
+// 联系方式验证器
 const contactValidator = (rule, value, callback) => {
   // 如果邮箱和手机号都为空，则触发错误回调，并显示错误信息
   // if (!form.email && !form.mobile) {
@@ -158,6 +162,7 @@ const contactValidator = (rule, value, callback) => {
   callback()
 }
 
+// 计算操作列配置
 const operations = computed(() => [
   {
     type: 'edit',
@@ -166,9 +171,14 @@ const operations = computed(() => [
   {
     type: 'delete',
     perm:'bnt.sysUser.remove'
-  }
+  },
+  {
+    label: t('action.resetPassword'),
+    onClick: handleResetPassword,
+    perm:'bnt.sysUser.resetPassword'
+  },
 ])
-
+// 计算表单验证规则
 const rules = computed(() => {
   return {
     username: [
@@ -202,43 +212,57 @@ function initFormRequest() {
   findRoles();
 }
 
+// 刷新表单
 function refreshForm(){
   filters.keyword = ''
   doSearch()
 }
 
+// 添加操作
 function handleAdd(row) {
   doAdd(row);
 }
 
+// 编辑操作
 function handleEdit(row) {
   initFormRequest();
   doEdit(getById, row.id);
   // form.roleList = row.roleIds.split(',')
 }
 
+// 获取部门树数据
 function findDeptTree() {
   listTree().then(res => {
     deptData.value = res.data;
   })
 }
 
+// 获取角色数据
 function findRoles() {
   listSimple().then(res => {
     roles.value = res.data;
   })
 }
 
+// 删除操作
 function handleDelete(ids, callback) {
   doRemove(remove, ids, callback)
 }
 
+// 重置密码
+function handleResetPassword(row) {
+  doResetPassword(resetPassword, row.id);
+
+}
+
+// 提交表单
 function handleSubmit() {
   doSubmit({save, update, getParams}, (res) => {
     ElMessage({message: t('tips.success'), type: "success"});
   });
 }
 
+// 获取表单参数
 function getParams() {
   const params = {...form}
   if (!isEdit.value) {
@@ -247,6 +271,7 @@ function getParams() {
   return params
 }
 
+// 组件挂载时初始化
 onMounted(() =>{
   initFormRequest();
 });

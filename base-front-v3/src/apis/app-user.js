@@ -36,6 +36,16 @@ export const update = (data) => {
     data,
   });
 };
+
+//重置密码
+export const resetPassword = (data) => {
+  return request({
+    url: `${api_name}/resetPassword`,
+    method: "post",
+    data,
+  });
+};
+
 // 删除
 export const remove = (data) => {
   return request({

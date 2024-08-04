@@ -73,8 +73,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Override
     public boolean save(SysUser sysUser) {
-        String pwd = MD5.encrypt(sysUser.getUsername());
-        sysUser.setPassword(pwd);
+        sysUser.setPassword(MD5.encrypt(sysUser.getUsername()));
         sysUser.setStatusData(sysUser.getStatus() ? 1 : 0);
         int result = this.sysUserMapper.insert(sysUser);
         List<String> roleList = sysUser.getRoleList();
