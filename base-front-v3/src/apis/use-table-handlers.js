@@ -42,12 +42,6 @@ export default function useTableHandlers(form) {
         });
     };
 
-    // 重置密码
-    const doResetPassword = (api, id) => {
-        api(id).then(() => {
-            //callback && callback();
-        });
-    };
 
     // 删除方法，调用API删除数据并执行回调
     const doRemove = (api, ids, callback) => {
@@ -130,7 +124,6 @@ export default function useTableHandlers(form) {
         doEdit,
         doSubmit,
         doClose,
-        doResetPassword,
         doRemove,
     };
 }

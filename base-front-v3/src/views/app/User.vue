@@ -100,6 +100,7 @@ import {listPage, save, update, remove, getById, resetPassword} from "@/apis/app
 import {listSimple} from "@/apis/app-role";
 import {listTree} from "@/apis/app-dept";
 import useTableHandlers from '@/apis/use-table-handlers'
+import {getResourceByRoleId} from "@/apis/app-resource";
 
 const filters = reactive({
   keyword: ''
@@ -126,7 +127,6 @@ const {
   doEdit, // 编辑函数
   doSubmit, // 提交函数
   doRemove, // 删除函数
-  doResetPassword, // 重置密码
   doClose // 关闭对话框函数
 } = useTableHandlers(form);
 
@@ -251,7 +251,10 @@ function handleDelete(ids, callback) {
 
 // 重置密码
 function handleResetPassword(row) {
-  doResetPassword(resetPassword, row.id);
+  const id = row.id;
+  resetPassword(id).then(res => {
+    ElMessage({message: t('tips.success'), type: "success"});
+  })
 
 }
 

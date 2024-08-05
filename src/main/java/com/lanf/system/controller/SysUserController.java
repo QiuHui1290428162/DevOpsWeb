@@ -78,9 +78,9 @@ public class SysUserController {
 
     @Log(title = "用户管理", businessType = BusinessType.RESET)
     @PreAuthorize("hasAuthority('bnt.sysUser.resetPassword')")
-    @ApiOperation(value = "更新用户")
+    @ApiOperation(value = "重置密码")
     @PostMapping("/resetPassword")
-    public Result resetPasswordById(@PathVariable String id) {
+    public Result resetPasswordById(@RequestBody String id) {
         SysUser user = sysUserService.getById(id);
         user.setPassword(MD5.encrypt(user.getUsername()));
         sysUserService.updateById(user);
