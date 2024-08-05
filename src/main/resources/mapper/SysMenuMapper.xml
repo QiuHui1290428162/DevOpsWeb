@@ -34,6 +34,7 @@
         and rm.is_deleted = 0
         and ur.is_deleted = 0
         and m.is_deleted = 0
+        order by m.sort_value
     </select>
 
     <select id="queryList" resultMap="sysMenuMap">

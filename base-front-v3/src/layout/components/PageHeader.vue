@@ -1,24 +1,29 @@
 <template>
+  <!-- 头部容器，包括左侧的标题和右侧的功能区 -->
   <div class="header-cont">
+    <!-- 左侧标题，点击跳转到主页 -->
     <div class="left">
       <h1>
         <router-link to="/">{{ t('sitename') }}</router-link>
       </h1>
     </div>
+    <!-- 右侧功能区，包括语言切换和用户相关操作 -->
     <div class="right flex-center">
+      <!-- 语言切换部分 -->
       <div class="lang gap">
         <span
-          class="item"
-          :class="{ active: locale === 'zh-cn' }"
-          @click="changeLanguage('zh-cn')"
+            class="item"
+            :class="{ active: locale === 'zh-cn' }"
+            @click="changeLanguage('zh-cn')"
         >简体中文</span>
         /
         <span
-          class="item"
-          :class="{ active: locale === 'en' }"
-          @click="changeLanguage('en')"
+            class="item"
+            :class="{ active: locale === 'en' }"
+            @click="changeLanguage('en')"
         >EN</span>
       </div>
+      <!-- 登录状态的下拉菜单 -->
       <template v-if="isLogin">
         <el-dropdown trigger="click" @command="handleCommand">
           <div class="flex-center cursor">
@@ -27,6 +32,7 @@
               <caret-bottom />
             </el-icon>
           </div>
+          <!-- 下拉菜单内容 -->
           <template #dropdown>
             <el-dropdown-menu>
               <el-dropdown-item command="toPersonal">{{ t('personalCenter') }}</el-dropdown-item>
@@ -35,12 +41,14 @@
           </template>
         </el-dropdown>
       </template>
+      <!-- 如果未登录且当前路由不是登录页，显示登录链接 -->
       <template v-else-if="$route.name !== 'Login'">
         <router-link to="/login">{{ t('login') }}</router-link>
       </template>
     </div>
   </div>
 </template>
+
 <script setup>
 import { logout } from '@/apis/login'
 const { locale, t } = useI18n();
@@ -55,6 +63,7 @@ const isLogin = computed(() => store.getters['user/isLogin']);
 const userInfo = computed(() => store.state.user.userInfo);
 const username = computed(() => userInfo.value?.name)
 
+// 更新用户信息
 store.dispatch('user/refreshInfo');
 
 const router = useRouter();
@@ -73,10 +82,14 @@ const commands = ({
     })
   }
 });
+
+// 处理下拉菜单命令
 function handleCommand(command) {
   commands[command] && commands[command]();
 }
 </script>
+
+
 <style lang="scss">
 .header-cont {
   display: flex;

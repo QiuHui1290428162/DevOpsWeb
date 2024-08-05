@@ -10,10 +10,10 @@
           <el-button icon="search" type="primary" :disabled="$hasBP('bnt.sysRole.list')  === false" @click="doSearch">{{ t('action.search') }}</el-button>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="refreshForm" :disabled="$hasBP('bnt.sysRole.list')  === false" icon="refresh">{{ t('action.reset') }}</el-button>
+          <el-button type="primary" @click="refreshForm" v-if="$hasBP('bnt.sysRole.list')" icon="refresh">{{ t('action.reset') }}</el-button>
         </el-form-item>
         <el-form-item>
-          <el-button icon="plus" type="primary" :disabled="$hasBP('bnt.sysRole.add')  === false" @click="doAdd">{{ t('action.add') }}</el-button>
+          <el-button icon="plus" type="primary" v-if="$hasBP('bnt.sysRole.add')" @click="doAdd">{{ t('action.add') }}</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -67,8 +67,8 @@
       :close-on-click-modal="false"
   >
     <div style="margin-top:-35px">
-    <el-button @click="selectAll">全选</el-button>
-    <el-button @click="deselectAll">反选</el-button>
+    <el-button @click="selectAll">{{ t("action.selectAll") }}</el-button>
+    <el-button @click="deselectAll">{{ t('action.invertSelect') }}</el-button>
     </div>
     <el-tree
         ref="treeRef"
