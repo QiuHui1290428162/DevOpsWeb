@@ -68,6 +68,7 @@ public class SysDeptController {
     @ApiOperation(value = "新增部门")
     @PostMapping("save")
     public Result save(@RequestBody SysDept sysDept) {
+        System.out.println(sysDept.toString());
         sysDeptService.save(sysDept);
         return Result.ok();
     }

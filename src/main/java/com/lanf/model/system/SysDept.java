@@ -38,7 +38,7 @@ public class SysDept extends BaseEntity {
 
     @ApiModelProperty(value = "层级")
     @TableField("level")
-    private Integer level = -1;
+    private Integer level = 1;
 
     @ApiModelProperty(value = "负责人")
     @TableField("leader")
@@ -52,4 +52,18 @@ public class SysDept extends BaseEntity {
     @TableField(exist = false)
     private List<SysDept> children;
 
+    @Override
+    public String toString() {
+        return "SysDept{" +
+                "name='" + name + '\'' +
+                ", parentId='" + parentId + '\'' +
+                ", parentName='" + parentName + '\'' +
+                ", treePath='" + treePath + '\'' +
+                ", sortValue=" + sortValue +
+                ", level=" + level +
+                ", leader='" + leader + '\'' +
+                ", phone='" + phone + '\'' +
+                ", children=" + children +
+                '}';
+    }
 }
