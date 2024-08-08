@@ -1,7 +1,7 @@
 package com.lanf.system.mapper;
 
-import com.lanf.model.system.SysUser;
-import com.lanf.model.vo.SysUserQueryVo;
+import com.lanf.system.model.SysUser;
+import com.lanf.system.vo.SysUserQueryVo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;

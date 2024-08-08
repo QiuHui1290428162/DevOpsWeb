@@ -31,7 +31,7 @@ public class CodeController {
         codeVo.setDriverName(dataSourceProperties.getDriverClassName());
         codeVo.setUsername(dataSourceProperties.getUsername());
         codeVo.setPassword(dataSourceProperties.getPassword());
-        Generator.generatOne(codeVo);
+        com.lanf.generator.Generator.generatOne(codeVo);
         return Result.ok();
     }
 }

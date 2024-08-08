@@ -3,14 +3,14 @@ package com.lanf.system.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lanf.common.result.ResultCodeEnum;
-import com.lanf.model.system.SysDept;
-import com.lanf.model.system.SysUser;
-import com.lanf.model.vo.SysDeptQueryVo;
+import com.lanf.system.model.SysDept;
+import com.lanf.system.model.SysUser;
+import com.lanf.system.vo.SysDeptQueryVo;
 import com.lanf.system.exception.LanfException;
 import com.lanf.system.mapper.SysDeptMapper;
 import com.lanf.system.service.SysDeptService;
-import com.lanf.system.utils.DeptHelper;
-import com.lanf.system.utils.UserUtil;
+import com.lanf.common.utils.DeptHelper;
+import com.lanf.common.utils.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,8 +18,6 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.io.Serializable;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 

@@ -5,7 +5,7 @@
 
 <mapper namespace="com.lanf.system.mapper.SysRoleMapper">
 
-    <resultMap id="RoleMap" type="com.lanf.model.system.SysRole" autoMapping="true">
+    <resultMap id="RoleMap" type="com.lanf.system.model.SysRole" autoMapping="true">
     </resultMap>
 
     <!-- 用于select查询公用抽取的列 -->

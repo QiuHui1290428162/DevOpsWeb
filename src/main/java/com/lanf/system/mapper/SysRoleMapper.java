@@ -3,8 +3,8 @@ package com.lanf.system.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.lanf.model.system.SysRole;
-import com.lanf.model.vo.SysRoleQueryVo;
+import com.lanf.system.model.SysRole;
+import com.lanf.system.vo.SysRoleQueryVo;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

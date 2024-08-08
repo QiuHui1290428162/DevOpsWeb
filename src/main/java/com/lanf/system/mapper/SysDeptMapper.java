@@ -1,8 +1,8 @@
 package com.lanf.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.lanf.model.system.SysDept;
-import com.lanf.model.vo.SysDeptQueryVo;
+import com.lanf.system.model.SysDept;
+import com.lanf.system.vo.SysDeptQueryVo;
 import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

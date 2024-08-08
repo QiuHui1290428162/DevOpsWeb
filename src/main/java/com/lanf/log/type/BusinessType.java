@@ -20,6 +20,11 @@ public enum BusinessType {
     UPDATE,
 
     /**
+     * 重置
+     */
+    RESET,
+
+    /**
      * 删除
      */
     DELETE,

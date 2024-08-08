@@ -1,8 +1,8 @@
 package com.lanf.system.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.lanf.model.system.SysMenu;
-import com.lanf.model.vo.AssginMenuVo;
+import com.lanf.system.model.SysMenu;
+import com.lanf.system.vo.AssginMenuVo;
 
 import java.util.List;
 

@@ -3,8 +3,8 @@ package com.lanf.log.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.lanf.model.system.SysOperLog;
-import com.lanf.model.vo.SysOperLogQueryVo;
+import com.lanf.system.model.SysOperLog;
+import com.lanf.system.vo.SysOperLogQueryVo;
 
 import java.util.List;
 

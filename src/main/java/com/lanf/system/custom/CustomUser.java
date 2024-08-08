@@ -1,7 +1,6 @@
 package com.lanf.system.custom;
 
-import com.lanf.model.system.SysUser;
-import lombok.Data;
+import com.lanf.system.model.SysUser;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 

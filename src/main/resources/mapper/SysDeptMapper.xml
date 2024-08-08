@@ -20,7 +20,7 @@
         </where>
     </select>
 
-    <select id="queryList" resultType="com.lanf.model.system.SysDept">
+    <select id="queryList" resultType="com.lanf.system.model.SysDept">
         select * from sys_dept sp
         <where>
             <if test="vo.name != null and vo.name != ''">

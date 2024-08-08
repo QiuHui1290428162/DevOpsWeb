@@ -1,8 +1,8 @@
 package com.lanf.system.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.lanf.model.system.SysDept;
-import com.lanf.model.vo.SysDeptQueryVo;
+import com.lanf.system.model.SysDept;
+import com.lanf.system.vo.SysDeptQueryVo;
 
 import java.util.List;
 import java.util.Map;

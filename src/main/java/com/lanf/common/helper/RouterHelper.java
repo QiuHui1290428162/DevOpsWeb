@@ -1,8 +1,8 @@
 package com.lanf.common.helper;
 
-import com.lanf.model.system.SysMenu;
-import com.lanf.model.vo.MetaVo;
-import com.lanf.model.vo.RouterVo;
+import com.lanf.system.model.SysMenu;
+import com.lanf.system.vo.MetaVo;
+import com.lanf.system.vo.RouterVo;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lanf.task.mapper.TaskScheduledEmailMapper">
+    <resultMap id="taskScheduledEmailMap" type="com.lanf.task.model.TaskScheduledEmail" autoMapping="true">
+    </resultMap>
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+            x1.task_name
+            ,x1.recipient_email
+            ,x1.cc_email
+            ,x1.subject
+            ,x1.body
+            ,x1.body_type
+            ,x1.attachment
+            ,x1.attachment_type
+            ,x1.database_name
+            ,x1.scheduled_time
+            ,x1.remarks
+            ,x1.status
+            ,x1.create_time
+            ,x1.update_time
+            ,x1.is_deleted
+            ,x1.id
+        
+    </sql>
+    <sql id="middles">
+        from task_scheduled_email x1
+    </sql>
+    <sql id="conditions">
+        <if test="vo.createTimeBegin != null and vo.createTimeBegin != ''">
+              and x1.create_time >= #{vo.createTimeBegin}
+        </if>
+        <if test="vo.createTimeEnd != null and vo.createTimeEnd != ''">
+             and x1.create_time &lt;= #{vo.createTimeEnd}
+        </if>
+        <if test="vo.updateTimeBegin != null and vo.updateTimeBegin != ''">
+             and x1.create_time >= #{vo.updateTimeBegin}
+        </if>
+        <if test="vo.updateTimeEnd != null and vo.updateTimeEnd != ''">
+             and x1.create_time &lt;= #{vo.updateTimeEnd}
+        </if>
+             and x1.is_deleted = 0 order by x1.create_time desc
+    </sql>
+    <select id="selectPage" resultMap="taskScheduledEmailMap">
+        select <include refid="columns" />
+        <include refid="middles" />
+        <where>
+            <include refid="conditions" />
+        </where>
+    </select>
+    <select id="queryList" resultMap="taskScheduledEmailMap">
+        select <include refid="columns" />
+        <include refid="middles" />
+        <where>
+            <include refid="conditions" />
+        </where>
+    </select>
+</mapper>

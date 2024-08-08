@@ -14,9 +14,9 @@ import java.util.List;
 import com.lanf.common.result.ResultCodeEnum;
 import com.lanf.system.exception.LanfException;
 <#if isGenDept=='true' || isGenLeftDept=='true'>
-import com.lanf.system.utils.UserUtil;
+import com.lanf.common.utils.UserUtil;
 import org.springframework.util.CollectionUtils;
-import com.lanf.model.system.SysUser;
+import com.lanf.system.model.SysUser;
 </#if>
 <#list data as var>
 <#if var.isMul=='true' && var.attrName=='id' && var.mod!='default' && var.mod!='radio'>
@@ -30,7 +30,7 @@ import java.util.function.Function;
 </#list>
 <#if genType=='1'>
 import com.lanf.model.base.TreeEntity;
-import com.lanf.system.utils.TreeHelper;
+import com.lanf.common.utils.TreeHelper;
 import org.springframework.util.CollectionUtils;
 import java.io.Serializable;
 </#if>

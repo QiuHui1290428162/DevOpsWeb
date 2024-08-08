@@ -14,9 +14,11 @@
         <el-checkbox label="main" :checked="false">启动类</el-checkbox>
       </el-checkbox-group>
     </el-form-item>
+    <!--
     <el-form-item label="激活码">
       <el-input v-model="form.authCode" placeholder=""></el-input>
     </el-form-item>
+    -->
     <el-form-item label="数据库表名">
       <el-input v-model="form.tabName"></el-input>
     </el-form-item>
@@ -29,7 +31,7 @@
     <el-form-item label="生成代码前端目录">
       <el-input v-model="form.frontPath"></el-input>
     </el-form-item>
-    <el-form-item label="作者">
+    <el-form-item label="创建人">
       <el-input v-model="form.author"></el-input>
     </el-form-item>
     <el-form-item>
@@ -42,11 +44,11 @@ import api from "@/apis/code"
 const loading = ref(false)
 const form = reactive({
   genList:[],
-  authCode:'',
+  //authCode:'',
   tabName:'',
-  packageName:'com.lanf.business',
-  filePath:'D:\\codeTmp\\basemf-sig-b3\\src\\main',
-  frontPath:'D:\\codeTmp\\basemf-sig-b3\\base-front-v3\\src',
+  packageName:'com.lanf',
+  filePath:'D:\\code\\code\\src\\main',
+  frontPath:'D:\\code\\code\\base-front-v3\\src',
   author:''
 })
 function onSubmit(){

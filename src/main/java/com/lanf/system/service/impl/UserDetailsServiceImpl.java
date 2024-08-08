@@ -1,6 +1,6 @@
 package com.lanf.system.service.impl;
 
-import com.lanf.model.system.SysUser;
+import com.lanf.system.model.SysUser;
 import com.lanf.system.custom.CustomUser;
 import com.lanf.system.service.SysMenuService;
 import com.lanf.system.service.SysUserService;

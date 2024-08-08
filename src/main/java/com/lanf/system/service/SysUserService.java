@@ -1,11 +1,11 @@
 package com.lanf.system.service;
 
-import com.lanf.model.system.SysUser;
+import com.lanf.system.model.SysUser;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.lanf.model.vo.SysPwdVo;
-import com.lanf.model.vo.SysUserQueryVo;
+import com.lanf.system.vo.SysPwdVo;
+import com.lanf.system.vo.SysUserQueryVo;
 import java.util.Map;
 
 public interface SysUserService extends IService<SysUser> {
