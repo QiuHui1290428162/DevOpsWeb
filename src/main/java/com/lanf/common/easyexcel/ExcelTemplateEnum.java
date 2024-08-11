@@ -1,4 +1,4 @@
-package com.lanf.system.easyexcel;
+package com.lanf.common.easyexcel;
 
 import lombok.Getter;
 

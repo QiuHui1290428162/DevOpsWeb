@@ -1,10 +1,9 @@
-package com.lanf.system.handler;
+package com.lanf.common.handler;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;
 
-import java.math.BigInteger;
 import java.util.Date;
 @Component
 public class MyMetaObjectHandler implements MetaObjectHandler {

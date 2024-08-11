@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lanf.task.model.TaskScheduledEmail;
 import com.lanf.task.vo.TaskScheduledEmailQueryVo;
+import com.lanf.task.vo.TaskScheduledEmailViewVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -18,6 +19,8 @@ import java.util.List;
 @Repository
 @Mapper
 public interface TaskScheduledEmailMapper extends BaseMapper<TaskScheduledEmail> {
-    IPage<TaskScheduledEmail> selectPage(Page<TaskScheduledEmail> page, @Param("vo") TaskScheduledEmailQueryVo taskScheduledEmailQueryVo);
+    IPage<TaskScheduledEmailViewVo> selectPage(Page<TaskScheduledEmail> page, @Param("vo") TaskScheduledEmailQueryVo taskScheduledEmailQueryVo);
     List<TaskScheduledEmail> queryList(@Param("vo") TaskScheduledEmailQueryVo taskScheduledEmailQueryVo);
+
+    int  removeByIds(@Param("ids") List<String> ids);
 }

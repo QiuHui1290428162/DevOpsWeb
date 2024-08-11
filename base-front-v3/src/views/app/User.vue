@@ -100,7 +100,6 @@ import {listPage, save, update, remove, getById, resetPassword} from "@/apis/app
 import {listSimple} from "@/apis/app-role";
 import {listTree} from "@/apis/app-dept";
 import useTableHandlers from '@/apis/use-table-handlers'
-import {getResourceByRoleId} from "@/apis/app-resource";
 
 const filters = reactive({
   keyword: ''

@@ -1,7 +1,7 @@
 package com.lanf.system.service.impl;
 
 import com.lanf.system.model.SysUser;
-import com.lanf.system.custom.CustomUser;
+import com.lanf.common.custom.CustomUser;
 import com.lanf.system.service.SysMenuService;
 import com.lanf.system.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;

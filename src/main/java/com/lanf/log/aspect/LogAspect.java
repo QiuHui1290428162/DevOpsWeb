@@ -37,8 +37,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 操作日志记录处理
+ * 拦截带有@Log注解的方法，并将操作日志记录下来
  */
-@Aspect
+@Aspect  //标识这是一个切面类，用于定义横切关注点，具体就是日志记录逻辑
 @Component
 public class LogAspect {
     private static final Logger log = LoggerFactory.getLogger(LogAspect.class);
@@ -141,6 +142,7 @@ public class LogAspect {
      */
     private void setRequestValue(JoinPoint joinPoint, SysOperLog operLog) throws Exception {
         String requestMethod = operLog.getRequestMethod();
+        //仅在请求方法为PUT或POST时保存请求参数
         if (HttpMethod.PUT.name().equals(requestMethod) || HttpMethod.POST.name().equals(requestMethod)) {
             String params = argsArrayToString(joinPoint.getArgs());
             operLog.setOperParam(params);
@@ -148,7 +150,7 @@ public class LogAspect {
     }
 
     /**
-     * 参数拼装
+     * 参数拼装,将参数对象转换为JSON格式
      */
     private String argsArrayToString(Object[] paramsArray) {
         String params = "";

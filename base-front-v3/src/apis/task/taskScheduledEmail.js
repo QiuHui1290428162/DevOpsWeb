@@ -42,5 +42,11 @@ remove(ids) {
         data: ids
     })
 },
-
 }
+
+export const getById = (id) => {
+    return request({
+        url: `${api_name}/get/${id}`,
+        method: 'get'
+    })
+};

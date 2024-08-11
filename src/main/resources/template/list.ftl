@@ -11,13 +11,13 @@
                </#if>
                 </#list>
                 <el-form-item>
-                    <el-button icon="search" type="primary" :disabled="$hasBP('bnt.${modelName2}.list')  === false" @click="doSearch">{{ t('action.search') }}</el-button>
+                    <el-button icon="search" type="primary" v-if="$hasBP('bnt.${modelName2}.list') " @click="doSearch">{{ t('action.search') }}</el-button>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" :disabled="$hasBP('bnt.${modelName2}.list')  === false"  @click="refreshForm" icon="refresh">{{ t('action.reset') }}</el-button>
+                    <el-button  icon="refresh" type="primary" v-if="$hasBP('bnt.${modelName2}.list')"  @click="refreshForm">{{ t('action.reset') }}</el-button>
                 </el-form-item>
                 <el-form-item>
-                    <el-button icon="plus" type="primary" :disabled="$hasBP('bnt.${modelName2}.add')  === false"  @click="doAdd">{{ t('action.add') }}</el-button>
+                    <el-button icon="plus" type="primary" v-if="$hasBP('bnt.${modelName2}.add')"  @click="doAdd">{{ t('action.add') }}</el-button>
                 </el-form-item>
             </el-form>
         </div>
@@ -41,7 +41,7 @@
             :close-on-click-modal="false"
             @close="doClose"
     >
-        <el-form ref="formRef" :model="form" label-width="80px" :rules="rules">
+        <el-form ref="formRef" :model="form" label-width="auto" :rules="rules" style="font-weight: bold;">
           <#list data as var>
            <#if var.attrName!='isDeleted' && var.attrName!='parentId' && var.attrName!='createTime' && var.attrName!='updateTime' && var.attrName!='id' >
             <el-form-item label="${var.remarks}" prop="${var.attrName}">

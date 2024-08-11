@@ -1,4 +1,4 @@
-package com.lanf.system.custom;
+package com.lanf.common.custom;
 
 import com.lanf.system.model.SysUser;
 import org.springframework.security.core.GrantedAuthority;

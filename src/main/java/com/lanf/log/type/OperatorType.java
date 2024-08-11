@@ -4,18 +4,10 @@ package com.lanf.log.type;
  * 操作人类别
  */
 public enum OperatorType {
-    /**
-     * 其它
-     */
-    OTHER,
 
-    /**
-     * 后台用户
-     */
-    MANAGE,
+    OTHER, //其它
 
-    /**
-     * 手机端用户
-     */
-    MOBILE
+    MANAGE, //后台用户
+
+    MOBILE  //移动用户
 }

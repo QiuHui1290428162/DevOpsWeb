@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import com.lanf.common.result.ResultCodeEnum;
-import com.lanf.system.exception.LanfException;
+import com.lanf.common.exception.CacheExpiredException;
 <#if isGenDept=='true' || isGenLeftDept=='true'>
 import com.lanf.common.utils.UserUtil;
 import org.springframework.util.CollectionUtils;

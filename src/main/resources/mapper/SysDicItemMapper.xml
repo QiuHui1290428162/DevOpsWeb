@@ -37,7 +37,9 @@
                 and x1.code like '%' + #{vo.code} + '%'
             </if>
             <if test="vo.name != null and vo.name != ''">
-                and x1.name like '%' + #{vo.name} + '%'
+                and ( x1.name like '%' + #{vo.name} + '%'
+                OR x2.name like '%' + #{vo.name} + '%'
+                OR x1.code like '%' + #{vo.name} + '%')
             </if>
             <if test="vo.createTimeBegin != null and vo.createTimeBegin != ''">
                 and x1.create_time >= #{vo.createTimeBegin}

@@ -3,16 +3,17 @@ package com.lanf.task.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.lanf.common.exception.CacheExpiredException;
 import com.lanf.task.model.TaskScheduledEmail;
 import com.lanf.task.vo.TaskScheduledEmailQueryVo;
 import com.lanf.task.mapper.TaskScheduledEmailMapper;
 import com.lanf.task.service.TaskScheduledEmailService;
+import com.lanf.task.vo.TaskScheduledEmailViewVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import com.lanf.common.result.ResultCodeEnum;
-import com.lanf.system.exception.LanfException;
 /**
 * @author hy.qiu
 * @version 1.0
@@ -27,7 +28,7 @@ public class TaskScheduledEmailServiceImpl extends ServiceImpl
     private TaskScheduledEmailMapper taskScheduledEmailMapper;
 
     @Override
-    public IPage<TaskScheduledEmail> selectPage(Page<TaskScheduledEmail> pageParam, TaskScheduledEmailQueryVo taskScheduledEmailQueryVo) {
+    public IPage<TaskScheduledEmailViewVo> selectPage(Page<TaskScheduledEmail> pageParam, TaskScheduledEmailQueryVo taskScheduledEmailQueryVo) {
         //QueryWrapper<TaskScheduledEmail> queryWrapper = new QueryWrapper<>();
         //return taskScheduledEmailMapper.selectPage(pageParam,queryWrapper);
         return taskScheduledEmailMapper.selectPage(pageParam,taskScheduledEmailQueryVo);
@@ -49,7 +50,7 @@ public class TaskScheduledEmailServiceImpl extends ServiceImpl
     public boolean updateById(TaskScheduledEmail taskScheduledEmail){
         int row = this.taskScheduledEmailMapper.updateById(taskScheduledEmail);
         if(row <= 0){
-            throw new LanfException(ResultCodeEnum.UPDATE_ERROR);
+            throw new CacheExpiredException(ResultCodeEnum.UPDATE_ERROR);
          }
         return row>0;
     }
@@ -63,4 +64,13 @@ public class TaskScheduledEmailServiceImpl extends ServiceImpl
       List<TaskScheduledEmail> list = this.taskScheduledEmailMapper.selectBatchIds(ids);
       return list;
    }
+
+    @Override
+    public boolean removeByIds (List<String> ids){
+        int row = this.taskScheduledEmailMapper.removeByIds(ids);
+        if(row <= 0){
+            throw new CacheExpiredException(ResultCodeEnum.DELETE_ERROR);
+         }
+        return row>0;
+    }
 }

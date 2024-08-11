@@ -1,4 +1,4 @@
-package com.lanf.system.config;
+package com.lanf.common.config;
 
 import com.lanf.common.result.Result;
 import com.lanf.common.result.ResultCodeEnum;

@@ -62,18 +62,22 @@ export default function useTableHandlers(form) {
     // 提交方法，验证表单并调用API保存或更新数据
     const doSubmit = (apis, callback) => {
         if (!form || !apis) return;
+        // valid 表示表单验证是否通过
         formRef.value.validate((valid) => {
             if (valid) {
+                //启用按钮加载
                 formLoading.value = true;
                 let promise;
+                //获取表单参数, 判断api是否有getParams()
                 const params = apis.getParams ? apis.getParams() : getParams();
                 if (isEdit.value) {
                     promise = apis.update(params);
                 } else {
                     promise = apis.save(params);
                 }
-                promise
-                    .then((res) => {
+                //处理API响应
+                promise.then((res) => {
+                        //如果提供了 callback，则调用它并传入响应数据；否则显示一个成功的消息提示。
                         if (callback) {
                             callback(res);
                         } else {
@@ -83,6 +87,7 @@ export default function useTableHandlers(form) {
                                 showClose: true,
                             });
                         }
+                        //关闭表单对话框，并根据编辑状态刷新或重载表格数据。
                         doClose();
                         if (isEdit.value) {
                             tableRef.value.refresh();
@@ -90,6 +95,7 @@ export default function useTableHandlers(form) {
                             tableRef.value.reload();
                         }
                     })
+                    //取消按钮加载
                     .finally(() => {
                         formLoading.value = false;
                     });

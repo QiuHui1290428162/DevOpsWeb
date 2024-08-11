@@ -4,7 +4,7 @@
       <el-checkbox-group v-model="form.genList">
         <el-checkbox label="api" checked>前端api</el-checkbox>
         <el-checkbox label="vue" checked>前端页面</el-checkbox>
-        <el-checkbox label="po" checked>后端Po实体类</el-checkbox>
+        <el-checkbox label="po" checked>后端Poject实体类</el-checkbox>
         <el-checkbox label="vo" checked>后端Vo实体类</el-checkbox>
         <el-checkbox label="mapper" checked>后端Mapper生成</el-checkbox>
         <el-checkbox label="xml" checked>后端Mapper XML生成</el-checkbox>
@@ -34,11 +34,23 @@
     <el-form-item label="创建人">
       <el-input v-model="form.author"></el-input>
     </el-form-item>
+
+    <!-- 新增的注意事项标签 -->
+    <el-form-item label="注意事项">
+      <div style="color: red;">
+        <ol>
+          <li>数据表名和数据表字段必须有注释，否则会在生成“前端页面”和“后端Po实体类”代码时出错。</li>
+          <li>数据表字段必须包含：id(varchar)，name(varchar类型)，is_deleted(tinyint类型)，create_time(timestamp类型)，update_time(timestamp类型)，version(bigint类型)，否则代码无法生成。</li>
+        </ol>
+      </div>
+    </el-form-item>
+
     <el-form-item>
       <el-button type="primary" @click="onSubmit" v-loading.fullscreen.lock="loading">生成代码</el-button>
     </el-form-item>
   </el-form>
 </template>
+
 <script setup>
 import api from "@/apis/code"
 const loading = ref(false)

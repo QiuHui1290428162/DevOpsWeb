@@ -28,6 +28,7 @@ public class Result<T> {
         return result;
     }
 
+    // 返回数据和异常码
     public static <T> Result<T> build(T body, Integer code, String message) {
         Result<T> result = build(body);
         result.setCode(code);
@@ -35,6 +36,7 @@ public class Result<T> {
         return result;
     }
 
+    // 返回数据和自定义枚举异常
     public static <T> Result<T> build(T body, ResultCodeEnum resultCodeEnum) {
         Result<T> result = build(body);
         result.setCode(resultCodeEnum.getCode());
@@ -42,23 +44,29 @@ public class Result<T> {
         return result;
     }
 
+    /**
+     * 操作成功
+     * @param <T>
+     * @return Result
+     */
     public static<T> Result<T> ok(){
         return Result.ok(null);
     }
 
-    /**
-     * 操作成功
-     * @param data  baseCategory1List
-     * @param <T>
-     * @return
-     */
+
     public static<T> Result<T> ok(T data){
         Result<T> result = build(data);
         return build(data, ResultCodeEnum.SUCCESS);
     }
 
+
+    /**
+     * 操作失败
+     * @param <T>
+     * @return Result
+     */
     public static<T> Result<T> fail(){
-        return Result.fail(null);
+        return Result.fail(ResultCodeEnum.FAIL);
     }
 
     /**
@@ -70,6 +78,20 @@ public class Result<T> {
     public static<T> Result<T> fail(T data){
         Result<T> result = build(data);
         return build(data, ResultCodeEnum.FAIL);
+    }
+
+    public static<T> Result<T> fail(ResultCodeEnum resultCodeEnum){
+        Result<T> result = new Result<>();
+        result.setCode(resultCodeEnum.getCode());
+        result.setMessage(resultCodeEnum.getMessage());
+        return result;
+    }
+
+    public static<T> Result<T> fail(Integer code, String message){
+        Result<T> result = new Result<>();
+        result.setCode(code);
+        result.setMessage(message);
+        return result;
     }
 
     public Result<T> message(String msg){

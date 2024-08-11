@@ -29,22 +29,41 @@
         from task_scheduled_email x1
     </sql>
     <sql id="conditions">
+        <if test="vo.taskName != null and vo.taskName != ''">
+            and x1.task_name  like '%' + #{vo.taskName}+ '%'
+        </if>
+        <if test="vo.recipientEmail != null and vo.recipientEmail != ''">
+            and x1.recipient_email   like '%' + #{vo.recipientEmail}+ '%'
+        </if>
+        <if test="vo.ccEmail != null and vo.ccEmail != ''">
+            and x1.cc_email   like '%' + #{vo.ccEmail}+ '%'
+        </if>
+        <if test="vo.databaseName != null and vo.databaseName != '' and vo.databaseName != '默认'">
+            and x1.database_name = #{vo.databaseName}
+        </if>
+        <if test="vo.status != -1">
+            and x1.status = #{vo.status}
+        </if>
         <if test="vo.createTimeBegin != null and vo.createTimeBegin != ''">
-              and x1.create_time >= #{vo.createTimeBegin}
+              and x1.create_time &gt;= #{vo.createTimeBegin}
         </if>
         <if test="vo.createTimeEnd != null and vo.createTimeEnd != ''">
              and x1.create_time &lt;= #{vo.createTimeEnd}
         </if>
         <if test="vo.updateTimeBegin != null and vo.updateTimeBegin != ''">
-             and x1.create_time >= #{vo.updateTimeBegin}
+             and x1.update_time &gt;= #{vo.updateTimeBegin}
         </if>
         <if test="vo.updateTimeEnd != null and vo.updateTimeEnd != ''">
-             and x1.create_time &lt;= #{vo.updateTimeEnd}
+             and x1.update_time &lt;= #{vo.updateTimeEnd}
         </if>
              and x1.is_deleted = 0 order by x1.create_time desc
     </sql>
-    <select id="selectPage" resultMap="taskScheduledEmailMap">
-        select <include refid="columns" />
+    <select id="selectPage" resultType="com.lanf.task.vo.TaskScheduledEmailViewVo">
+        select x1.id , x1.task_name ,x1.recipient_email ,x1.cc_email ,x1.subject ,x1.body ,x1.attachment
+        ,CASE x1.body_type WHEN 0 THEN '文本/HTML' WHEN 1 THEN '存储过程' WHEN 2 THEN '数据表/视图' ELSE '' END body_type
+        ,CASE x1.attachment_type WHEN 0 THEN '存储过程' WHEN 1 THEN '数据表/视图' ELSE '' END attachment_type
+        ,x1.database_name ,x1.scheduled_time ,x1.remarks  ,x1.create_time ,x1.update_time ,x1.is_deleted
+        ,CASE x1.status WHEN 0 THEN '停用' WHEN 1 THEN '正常' ELSE '' END status
         <include refid="middles" />
         <where>
             <include refid="conditions" />
@@ -57,4 +76,15 @@
             <include refid="conditions" />
         </where>
     </select>
+
+    <update id="removeByIds">
+        UPDATE dbo.task_scheduled_email
+        SET
+        status = 0,
+        is_deleted = 1
+        WHERE id IN
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
 </mapper>

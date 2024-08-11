@@ -1,4 +1,4 @@
-package com.lanf.system.custom;
+package com.lanf.common.custom;
 
 import com.lanf.common.utils.MD5;
 import org.springframework.security.crypto.password.PasswordEncoder;

@@ -7,7 +7,6 @@ import com.lanf.common.result.Result;
 import com.lanf.common.result.ResultCodeEnum;
 import com.lanf.common.utils.HeaderConstant;
 import com.lanf.common.utils.ResponseUtil;
-import com.lanf.system.exception.LanfException;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -61,9 +60,6 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             ResponseUtil.out(response, Result.build(null, TOKENEXPIRED));
             return;
         } catch (CacheExpiredException e) {
-            ResponseUtil.out(response, Result.build(null, TOKENEXPIRED));
-            return;
-        } catch (LanfException e) {
             if (e.getCode().equals(ResultCodeEnum.LOGIN_AUTH.getCode())) {
                 ResponseUtil.out(response, Result.build(null, ResultCodeEnum.LOGIN_AUTH));
                 return;
@@ -85,7 +81,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             token = request.getParameter(HeaderConstant.token);
         }
         if (StringUtils.isEmpty(token)) {
-            throw new LanfException(ResultCodeEnum.LOGIN_AUTH);
+            throw new CacheExpiredException(ResultCodeEnum.LOGIN_AUTH);
         }
         logger.info("token:" + token);
         if (!StringUtils.isEmpty(token)) {

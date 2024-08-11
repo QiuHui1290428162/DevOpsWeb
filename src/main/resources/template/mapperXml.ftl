@@ -108,16 +108,16 @@
             </choose>
         </#if>
         <if test="vo.createTimeBegin != null and vo.createTimeBegin != ''">
-              and x1.create_time >= ${r"#"}{vo.createTimeBegin}
+              and x1.create_time &gt;= ${r"#"}{vo.createTimeBegin}
         </if>
         <if test="vo.createTimeEnd != null and vo.createTimeEnd != ''">
              and x1.create_time &lt;= ${r"#"}{vo.createTimeEnd}
         </if>
         <if test="vo.updateTimeBegin != null and vo.updateTimeBegin != ''">
-             and x1.create_time >= ${r"#"}{vo.updateTimeBegin}
+             and x1.update_time &gt;= ${r"#"}{vo.updateTimeBegin}
         </if>
         <if test="vo.updateTimeEnd != null and vo.updateTimeEnd != ''">
-             and x1.create_time &lt;= ${r"#"}{vo.updateTimeEnd}
+             and x1.update_time &lt;= ${r"#"}{vo.updateTimeEnd}
         </if>
              and x1.is_deleted = 0 order by x1.create_time desc
     </sql>

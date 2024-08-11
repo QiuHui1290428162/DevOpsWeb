@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lanf.system.model.SysDic;
 import com.lanf.system.vo.SysDicQueryVo;
+import org.apache.poi.ss.formula.functions.T;
 
 /**
  * @author tanlingfei
@@ -14,4 +15,6 @@ import com.lanf.system.vo.SysDicQueryVo;
  */
 public interface SysDicService extends IService<SysDic> {
     IPage<SysDic> selectPage(Page<SysDic> pageParam, SysDicQueryVo queryVo);
+
+    boolean updateById(SysDic sysDic);
 }

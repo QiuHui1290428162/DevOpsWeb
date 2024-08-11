@@ -3,10 +3,12 @@ package com.lanf.task.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lanf.common.result.Result;
+import com.lanf.log.type.OperatorType;
 import com.lanf.task.model.TaskScheduledEmail;
 import com.lanf.task.vo.TaskScheduledEmailQueryVo;
 import com.lanf.task.service.TaskScheduledEmailService;
 import com.lanf.log.type.BusinessType;
+import com.lanf.task.vo.TaskScheduledEmailViewVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -38,7 +40,7 @@ public class TaskScheduledEmailController {
     @ApiParam(name = "taskScheduledEmailQueryVo", value = "查询对象", required = false)
     TaskScheduledEmailQueryVo taskScheduledEmailQueryVo) {
         Page<TaskScheduledEmail> pageParam = new Page<>(page, limit);
-        IPage<TaskScheduledEmail> pageModel = taskScheduledEmailService.selectPage(pageParam, taskScheduledEmailQueryVo);
+        IPage<TaskScheduledEmailViewVo> pageModel = taskScheduledEmailService.selectPage(pageParam, taskScheduledEmailQueryVo);
         return Result.ok(pageModel);
     }
 

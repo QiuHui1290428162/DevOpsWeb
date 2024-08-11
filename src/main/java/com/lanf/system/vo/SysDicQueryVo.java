@@ -19,5 +19,7 @@ public class SysDicQueryVo {
         private Date updateTimeBegin;
         private Date updateTimeEnd;
 
+
+
 }
 

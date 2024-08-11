@@ -1,7 +1,7 @@
-package com.lanf.system.config;
+package com.lanf.common.config;
 
 import com.lanf.log.service.SysLoginLogService;
-import com.lanf.system.custom.CustomMd5PasswordEncoder;
+import com.lanf.common.custom.CustomMd5PasswordEncoder;
 import com.lanf.system.filter.TokenAuthenticationFilter;
 import com.lanf.system.filter.TokenLoginFilter;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,11 +2,11 @@ package com.lanf.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.lanf.common.exception.CacheExpiredException;
 import com.lanf.common.result.ResultCodeEnum;
 import com.lanf.system.model.SysDept;
 import com.lanf.system.model.SysUser;
 import com.lanf.system.vo.SysDeptQueryVo;
-import com.lanf.system.exception.LanfException;
 import com.lanf.system.mapper.SysDeptMapper;
 import com.lanf.system.service.SysDeptService;
 import com.lanf.common.utils.DeptHelper;
@@ -136,7 +136,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
     public boolean removeById(Serializable id) {
         int count = this.count(new QueryWrapper<SysDept>().eq("parent_id", id));
         if (count > 0) {
-            throw new LanfException(ResultCodeEnum.NODE_ERROR);
+            throw new CacheExpiredException(ResultCodeEnum.NODE_ERROR);
         }
         sysDeptMapper.deleteById(id);
         return false;

@@ -22,7 +22,8 @@
     </sql>
     <sql id="conditions">
         <if test="vo.name != null and vo.name != ''">
-            and x1.name like '%' + #{vo.name} + '%'
+            and (x1.name like '%' + #{vo.name} + '%'
+                OR x1.val like '%' + #{vo.name} + '%')
         </if>
         <if test="vo.val != null and vo.val != ''">
             and x1.val like '%' + #{vo.val} + '%'
