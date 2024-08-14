@@ -114,17 +114,7 @@
             <artifactId>joda-time</artifactId>
             <version>2.10.1</version>
         </dependency>
-        <!--xls-->
-        <dependency>
-            <groupId>org.apache.poi</groupId>
-            <artifactId>poi</artifactId>
-            <version>3.17</version>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>easyexcel</artifactId>
-            <version>2.1.1</version>
-        </dependency>
+
         <!--commons-io-->
         <dependency>
             <groupId>commons-io</groupId>
@@ -149,11 +139,22 @@
             <version>20170516</version>
         </dependency>
 
+        <!--xls-->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>4.1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>easyexcel</artifactId>
+            <version>2.1.1</version>
+        </dependency>
         <!--Apache POI 库 , 可生成 Excel 表格-->
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
-            <version>5.2.3</version>
+            <version>4.1.2</version>
         </dependency>
         <!--Apache POI 库应用的1.21版本有漏洞, 覆盖使用1.26版本-->
         <dependency>

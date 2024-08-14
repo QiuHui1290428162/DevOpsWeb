@@ -187,7 +187,7 @@
 </template>
 
 <script setup>
-    import api from "@/apis/task/taskScheduledEmail";
+import api, {sendMail} from "@/apis/task/taskScheduledEmail";
     import useTableHandlers from '@/apis/use-table-handlers'
     import dicItemApi from "@/apis/dic-item";
     import {getById} from "@/apis/task/taskScheduledEmail";
@@ -211,7 +211,7 @@
         attachment: '',
         attachmentType: '',
         databaseName: '',
-        scheduledTime: '',
+        scheduledTime: '0 0 0 0 0 0',
         remarks: '',
         status: ''
     });
@@ -256,7 +256,8 @@
         {
           label: t('action.sendEmail'),
           onClick: handleSendEmail,
-          perm: 'bnt.taskScheduledEmail.sendEmail'
+          perm: 'bnt.taskScheduledEmail.sendEmail',
+          isDisabled: (row) => row.status !== "正常"   // 该行 status 不为 正常 时禁用按钮
         },
         {
             type: 'delete',
@@ -400,10 +401,48 @@
       });
     }
 
+const sendingMail = ref(false);
     //发送邮件
-    function handleSendEmail(row) {
+function handleSendEmail(row) {
+  if (sendingMail.value) {
+    return; // 如果正在发送，则直接返回，防止重复发送
+  }
+  ElMessageBox.confirm(
+      t('tips.sendMailConfirm'),
+      t('tips.warnTitle'), {
+        confirmButtonText: t('action.confirm'),
+        cancelButtonText: t('action.cancel'),
+        type: "warning",
+        draggable: true,
+      }
+  ).then(() => {
+    ElMessage({
+      message: t("tips.sendEmail"),
+      type: "success",
+      showClose: true,
+    });
 
-    }
+    sendingMail.value = true; // 设置发送状态为真
+    sendMail(row.id).then(response => {
+      ElMessage({
+        message: t("tips.sendEmailSuccess"),
+        type: "success",
+        showClose: true,
+      });
+    }).catch((error) => {
+      ElMessage({
+        message: error.message,
+        type: "error",
+        showClose: true,
+      });
+    }).finally(() => {
+      sendingMail.value = false; // 无论成功还是失败，都重置发送状态
+    });
+  }).catch(() => {
+    // 如果用户取消操作，可以选择不执行任何操作或给出提示
+  });
+}
+
 
     //使用回调函数确保顺序
     function handleSubmit() {

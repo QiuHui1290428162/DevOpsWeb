@@ -50,10 +50,14 @@
                   @click="handleDelete(row)"
               >{{ t('action.delete') }}
               </el-button>
-              <!-- 自定义按钮 -->
+              <!-- 自定义按钮
+                如果 opr 对象有 isDisabled 函数，就调用它并传入当前行 row 作为参数。
+                如果没有定义 isDisabled 函数，则默认不禁用按钮。
+              -->
               <el-button
                   v-else
                   type="text"
+                  :disabled="opr.isDisabled ? opr.isDisabled(row) : false"
                   @click="opr.onClick(row)"
               >{{ opr.label }}
               </el-button>

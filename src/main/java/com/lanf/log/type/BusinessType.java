@@ -16,5 +16,6 @@ public enum BusinessType {
     FORCE,  // 强退
     STATUS, // 状态
     CLEAN,  // 清空
+    SENDMAIL, // 发送邮件
 }
 

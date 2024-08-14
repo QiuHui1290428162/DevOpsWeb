@@ -30,7 +30,7 @@ import java.util.function.Function;
 </#list>
 <#if genType=='1'>
 import com.lanf.model.base.TreeEntity;
-import com.lanf.common.utils.TreeHelper;
+import com.lanf.common.helper.TreeHelper;
 import org.springframework.util.CollectionUtils;
 import java.io.Serializable;
 </#if>

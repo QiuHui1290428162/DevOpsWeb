@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lanf.common.helper.JwtHelper;
 import com.lanf.common.result.Result;
 import com.lanf.common.result.ResultCodeEnum;
-import com.lanf.common.utils.HeaderConstant;
+import com.lanf.common.info.HeaderConstant;
 import com.lanf.common.utils.IpUtil;
 import com.lanf.common.utils.ResponseUtil;
 import com.lanf.log.service.SysLoginLogService;

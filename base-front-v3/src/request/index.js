@@ -103,7 +103,7 @@ export default function request(options) {
                     resolve(res);
                 } else {
                     // 未登录
-                    if (res.code == '208' || res.code == '50014' || res.code == '300') {
+                    if (res.code === 100014 || res.code === 100017 || res.code == 100018) {
                         store.commit('user/clearToken');
                         reject(res);
                         router.push({ path: '/login' });

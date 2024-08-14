@@ -1,5 +1,5 @@
 import request from '@/request'
-const api_name = '/task/taskScheduledEmail'
+const api_name = '/tasks/taskScheduledEmail'
 export default {
 listPage(page, limit, searchObj) {
     return request({
@@ -48,5 +48,13 @@ export const getById = (id) => {
     return request({
         url: `${api_name}/get/${id}`,
         method: 'get'
+    })
+};
+
+export const sendMail = (id) => {
+    return request({
+        url: `${api_name}/sendMail`,
+        method: 'post',
+        data: id
     })
 };

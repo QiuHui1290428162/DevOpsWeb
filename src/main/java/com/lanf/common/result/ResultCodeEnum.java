@@ -61,6 +61,7 @@ public enum ResultCodeEnum {
     EMAIL_SUBJECT_NOT_SET(1010006, "邮件发送失败，没有设置邮件主题");
 
 
+
     //异常码
     private Integer code;
     //异常信息

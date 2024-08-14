@@ -10,8 +10,8 @@ import java.util.Date;
  */
 public class JwtHelper {
 
-    private static long tokenExpiration =    24 * 60 * 60 * 1000;
-    private static String tokenSignKey = "mf5240.com";
+    private static long tokenExpiration = 24 * 60 * 60 * 1000; // 令牌过期时间，单位为毫秒
+    private static String tokenSignKey = "mf5240.com"; // 签名密钥，用于对JWT令牌进行签名和验证
 
     public static String createToken(String userId, String username) {
         String token = Jwts.builder()
@@ -53,18 +53,29 @@ public class JwtHelper {
         }
     }
 
+
     public static String getUsername(String token) {
         try {
+            // 检查令牌是否为空
             if (StringUtils.isEmpty(token)) return "";
 
-            Jws<Claims> claimsJws = Jwts.parser().setSigningKey(tokenSignKey).parseClaimsJws(token);
+            // 解析令牌并验证其签名
+            Jws<Claims> claimsJws = Jwts.parser()
+                    .setSigningKey(tokenSignKey) // 设置签名密钥
+                    .parseClaimsJws(token); // 解析并验证JWT令牌
+
+            // 获取JWT中的负载部分，即Claims对象
             Claims claims = claimsJws.getBody();
+
+            // 从Claims中提取username字段并返回
             return (String) claims.get("username");
-        }catch (ExpiredJwtException e){
+        } catch (ExpiredJwtException e) {
+            // 如果令牌已过期，则抛出ExpiredJwtException异常
             throw e;
-        }catch (Exception e) {
+        } catch (Exception e) {
+            // 捕获其他异常，并打印堆栈跟踪
             e.printStackTrace();
-            return null;
+            return null; // 返回null表示解析失败
         }
     }
 

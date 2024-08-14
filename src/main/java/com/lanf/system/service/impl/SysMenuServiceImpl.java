@@ -12,7 +12,7 @@ import com.lanf.system.mapper.SysMenuMapper;
 import com.lanf.system.service.SysMenuService;
 import com.lanf.system.service.SysRoleMenuService;
 import com.lanf.system.service.SysUserService;
-import com.lanf.common.utils.MenuHelper;
+import com.lanf.common.helper.MenuHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

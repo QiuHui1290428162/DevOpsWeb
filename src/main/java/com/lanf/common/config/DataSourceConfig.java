@@ -35,6 +35,12 @@ public class DataSourceConfig {
         return DataSourceBuilder.create().build();
     }
 
+    @Bean(name = "WHSY")
+    @ConfigurationProperties(prefix = "spring.datasource.whsy")
+    public DataSource dataSourceWHSY() {
+        return DataSourceBuilder.create().build();
+    }
+
     @Bean(name = "WHGX_MES")
     @ConfigurationProperties(prefix = "spring.datasource.whgxmes")
     public DataSource dataSourceWHGX_MES() {
@@ -62,9 +68,10 @@ public class DataSourceConfig {
     @Bean
     @Primary  // @Primary 注解指定一个默认数据源。
     @Lazy     //懒加载,延迟该 Bean初始化, 避免与H2数据源冲突
-    @DependsOn({"DevOps", "HNSX", "WHGX", "WHGX_MES", "GXYT_TEST", "MES_Prod_SX", "MES_SX"}) //指定加载顺序
+    @DependsOn({"DevOps", "HNSX", "WHGX", "WHSY", "WHGX_MES", "GXYT_TEST", "MES_Prod_SX", "MES_SX"}) //指定加载顺序
     public DynamicDataSource dataSource(@Qualifier("HNSX") DataSource dataSourceHNSX,
                                         @Qualifier("WHGX") DataSource dataSourceWHGX,
+                                        @Qualifier("WHSY") DataSource dataSourceWHSY,
                                         @Qualifier("DevOps") DataSource dataSourceDevOps,
                                         @Qualifier("WHGX_MES") DataSource dataSourceWHGX_MES,
                                         @Qualifier("GXYT_TEST") DataSource dataSourceGXYT_TEST,
@@ -75,6 +82,7 @@ public class DataSourceConfig {
         targetDataSources.put("DevOps", dataSourceDevOps);
         targetDataSources.put("HNSX", dataSourceHNSX);
         targetDataSources.put("WHGX", dataSourceWHGX);
+        targetDataSources.put("WHSY", dataSourceWHGX);
         targetDataSources.put("WHGX_MES", dataSourceWHGX_MES);
         targetDataSources.put("GXYT_TEST", dataSourceGXYT_TEST);
         targetDataSources.put("MES_Prod_SX", dataSourceMES_Prod_SX);

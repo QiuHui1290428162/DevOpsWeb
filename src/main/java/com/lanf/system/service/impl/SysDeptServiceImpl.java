@@ -9,7 +9,7 @@ import com.lanf.system.model.SysUser;
 import com.lanf.system.vo.SysDeptQueryVo;
 import com.lanf.system.mapper.SysDeptMapper;
 import com.lanf.system.service.SysDeptService;
-import com.lanf.common.utils.DeptHelper;
+import com.lanf.common.helper.DeptHelper;
 import com.lanf.common.utils.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

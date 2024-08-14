@@ -5,7 +5,7 @@ import com.lanf.common.exception.CacheExpiredException;
 import com.lanf.common.helper.JwtHelper;
 import com.lanf.common.result.Result;
 import com.lanf.common.result.ResultCodeEnum;
-import com.lanf.common.utils.HeaderConstant;
+import com.lanf.common.info.HeaderConstant;
 import com.lanf.common.utils.ResponseUtil;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -29,6 +29,9 @@ import java.util.Map;
  * @version 1.0
  * @description 认证解析过滤器
  * @date 2023/2/27 10:23
+ * 由于spring Security管理请求的身份验证和授权, 并在WebSecurityConfig禁用了session,
+ * 这意味着服务器是无状态的，一般适用于 JWT 或其他 token-based 认证方式。
+ * 在这种模式下，服务器不维护用户的会话状态，所以重定向行为通常需要在客户端(base-front-v3/src/request/index.js)处理。
  */
 public class TokenAuthenticationFilter extends OncePerRequestFilter {
 

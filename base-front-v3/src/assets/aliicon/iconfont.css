@@ -1,8 +1,9 @@
+/* 在线链接服务仅供平台体验和调试使用，平台不承诺服务的稳定性，企业客户需下载字体包自行发布使用并做好备份。 */
 @font-face {
-  font-family: "iconfont"; /* Project id 4336770 */
-  src: url('iconfont.woff2?t=1701053151218') format('woff2'),
-       url('iconfont.woff?t=1701053151218') format('woff'),
-       url('iconfont.ttf?t=1701053151218') format('truetype');
+  font-family: 'iconfont';  /* Project id 4652762 */
+  src: url('font_4652762_fpb6m6m66wr.woff2?t=1723599160424') format('woff2'),
+  url('font_4652762_fpb6m6m66wr.woff?t=1723599160424') format('woff'),
+  url('font_4652762_fpb6m6m66wr.ttf?t=1723599160424') format('truetype');
 }
 
 .iconfont {
@@ -13,67 +14,78 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-daimashengcheng:before {
-  content: "\e611";
+.icon-zhuangtaiguanli:before {
+  content: "\ebd1";
 }
 
-.icon-guanliyuan_jiaoseguanli:before {
-  content: "\e613";
-}
-
-.icon-xitongguanli1:before {
-  content: "\e626";
-}
-
-.icon-yonghuguanli1:before {
-  content: "\e630";
-}
-
-.icon-denglurizhi:before {
-  content: "\e694";
-}
-
-.icon-caozuorizhi:before {
-  content: "\e7d4";
-}
-
-.icon-bumenguanli:before {
-  content: "\ea45";
-}
-
-.icon-caidanguanli:before {
-  content: "\e658";
-}
-
-.icon-jiaoseguanli:before {
-  content: "\e665";
-}
-
-.icon-yonghuguanli:before {
-  content: "\e612";
-}
-
-.icon-xitongguanli:before {
-  content: "\e648";
-}
-
-.icon-yuyanshezhi:before {
-  content: "\e6cd";
-}
-
-.icon--zidianxuanxiang:before {
-  content: "\e60e";
-}
-
-.icon-shujuzidianfenlei:before {
-  content: "\e77e";
-}
-
-.icon-zidianguanli:before {
-  content: "\e641";
+.icon-xitongrizhi:before {
+  content: "\e627";
 }
 
 .icon-rizhiguanli:before {
-  content: "\e65e";
+  content: "\e715";
 }
 
+.icon-yuyanshezhi:before {
+  content: "\e60a";
+}
+
+.icon-denglurizhi:before {
+  content: "\e69d";
+}
+
+.icon-code:before {
+  content: "\e615";
+}
+
+.icon-zhongzhi:before {
+  content: "\e604";
+}
+
+.icon-caozuorizhi:before {
+  content: "\e69c";
+}
+
+.icon-zhuangtaifenlei:before {
+  content: "\e66b";
+}
+
+.icon-zhuangtailiebiao:before {
+  content: "\e66e";
+}
+
+.icon-xitongguanli:before {
+  content: "\e60b";
+}
+
+.icon-caidanguanli:before {
+  content: "\e613";
+}
+
+.icon-yonghuguanli:before {
+  content: "\e65d";
+}
+
+.icon-dingshirenwu:before {
+  content: "\e663";
+}
+
+.icon-sousuo:before {
+  content: "\e664";
+}
+
+.icon-tianjia:before {
+  content: "\e665";
+}
+
+.icon-jueseguanli:before {
+  content: "\e666";
+}
+
+.icon-youxiang:before {
+  content: "\e668";
+}
+
+.icon-jigouguanli:before {
+  content: "\e669";
+}
