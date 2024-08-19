@@ -1,4 +1,4 @@
-package com.lanf.system.model;
+package com.lanf.log.model;
 
 import com.lanf.model.base.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableField;

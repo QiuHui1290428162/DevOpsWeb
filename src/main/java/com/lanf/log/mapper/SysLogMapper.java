@@ -1,10 +1,10 @@
-package com.lanf.system.mapper;
+package com.lanf.log.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.lanf.system.model.SysLog;
-import com.lanf.system.vo.SysLogQueryVo;
+import com.lanf.log.model.SysLog;
+import com.lanf.log.vo.SysLogQueryVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;

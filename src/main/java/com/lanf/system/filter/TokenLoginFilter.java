@@ -9,7 +9,7 @@ import com.lanf.common.info.HeaderConstant;
 import com.lanf.common.utils.IpUtil;
 import com.lanf.common.utils.ResponseUtil;
 import com.lanf.log.service.SysLoginLogService;
-import com.lanf.system.model.SysLoginLog;
+import com.lanf.log.model.SysLoginLog;
 import com.lanf.system.vo.LoginVo;
 import com.lanf.common.custom.CustomUser;
 import org.springframework.data.redis.core.RedisTemplate;

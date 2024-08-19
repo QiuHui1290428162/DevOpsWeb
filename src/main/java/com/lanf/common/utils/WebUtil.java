@@ -16,6 +16,9 @@ public class WebUtil {
     public static HttpServletRequest getRequest() {
         ServletRequestAttributes servletRequestAttributes =
                 (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        if (servletRequestAttributes == null) {
+            return null;
+        }
         HttpServletRequest request = servletRequestAttributes.getRequest();
         return request;
     }

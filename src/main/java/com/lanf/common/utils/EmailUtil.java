@@ -24,4 +24,28 @@ public class EmailUtil {
         }
         return result;
     }
+
+    public static String[] trimRecipientEmails(String emails) {
+        if (StringUtil.isNullOrEmptyString(emails)) {
+            return null;
+        }
+
+        // 去除邮箱地址的前后空格和分号
+        emails = emails.trim();
+        if (emails.charAt(emails.length() - 1) == ';'){
+            emails = emails.substring(0, emails.length() - 1);
+        }
+
+        // 分割字符串为各个邮箱地址
+        String[] emailArray = emails.split(";");
+        for ( int i=0; i<emailArray.length; i++ ) {
+            emailArray[i] = emailArray[i].trim();
+            //校验邮件
+            if (!isValidEmailAddress(emailArray[i])) {
+                return null;
+            }
+        }
+        return emailArray;
+    }
+
 }

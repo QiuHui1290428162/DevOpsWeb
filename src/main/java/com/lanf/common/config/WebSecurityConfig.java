@@ -86,9 +86,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         corsConfiguration.setAllowCredentials(true); // 是否返回时生成凭证
         corsConfiguration.setAllowedHeaders(Arrays.asList("*")); // 允许请求携带哪些请求头信息
         corsConfiguration.setAllowedMethods(Arrays.asList("*")); // 允许哪些类型的请求方法
-        String allowPath = environment.getProperty("front.path");
-        String aliaPath = allowPath.replace("127.0.0.1", "localhost");
-        corsConfiguration.setAllowedOrigins(Arrays.asList(allowPath, aliaPath)); // 允许哪些域可以进行访问
+        // 允许哪些域可以进行访问
+        String[] allowedOrigins = environment.getProperty("allowed.origins", String[].class);
+        if (allowedOrigins != null && allowedOrigins.length > 0) {
+            corsConfiguration.setAllowedOrigins(Arrays.asList(allowedOrigins));
+        }
         corsConfiguration.setMaxAge(3600L); // 设置预检的最大的时长
         corsConfiguration.setExposedHeaders(Collections.emptyList()); // 设置返回暴露的响应头信息
 

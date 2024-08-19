@@ -1,6 +1,8 @@
 //package com.lanf;
 //
 //
+//import com.lanf.common.utils.UserUtil;
+//import com.lanf.system.model.SysUser;
 //import com.lanf.tasks.model.TaskScheduledEmail;
 //import com.lanf.tasks.service.EmailService;
 //import com.lanf.tasks.service.TaskScheduledEmailService;
@@ -9,7 +11,7 @@
 //import org.springframework.boot.test.context.SpringBootTest;
 //
 //@SpringBootTest
-//public class emailTest {
+//public class UserTest {
 //
 //    @Autowired
 //    private EmailService emailServiceImpl;
@@ -24,13 +26,8 @@
 //     */
 //    @Test
 //    public void test1() {
-//        emailServiceImpl.sendMail("qiuhuiyong@gxytgroup.com",""
-//                ,"测试发送邮件","测试发送邮件",null);
+//        SysUser sysUser = UserUtil.getUserInfo();
+//        System.out.println(sysUser);
 //    }
 //
-//    @Test
-//    public void test2() {
-//        TaskScheduledEmail task =  taskScheduledEmailServiceImpl.getById("13");
-//        emailServiceImpl.sendMail(task);
-//    }
 //}

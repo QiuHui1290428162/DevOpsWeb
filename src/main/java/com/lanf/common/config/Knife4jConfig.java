@@ -56,7 +56,7 @@ public class Knife4jConfig {
                 .title("后台管理系统-API文档")
                 .description("本文档描述了后台管理系统微服务接口定义")
                 .version("1.0")
-                .contact(new Contact("lanf", "https://mf5240.com", "419719557@qq.com"))
+                .contact(new Contact("lanf", "https://mf5240.com", "qiuhuiyong@gxytgroup.com"))
                 .build();
     }
 }

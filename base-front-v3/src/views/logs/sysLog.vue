@@ -56,12 +56,12 @@
     // computed
     const columns = computed(() => [
         {type: 'selection'},
-        {prop: "module", label: "模块名称", minWidth: 120, showOverflowTooltip: true},
-        {prop: "functionName", label: "功能名称", minWidth: 120, showOverflowTooltip: true},
-        {prop: "class", label: "类名称", minWidth: 120, showOverflowTooltip: true},
-        {prop: "operationDescription", label: "操作描述", minWidth: 120, showOverflowTooltip: true},
-        {prop: "result", label: "操作结果", minWidth: 120, showOverflowTooltip: true},
-        {prop: "userName", label: "用户名", minWidth: 120, showOverflowTooltip: true},
+        {prop: "module", label: "模块名称", minWidth: 80, showOverflowTooltip: true},
+        {prop: "functionName", label: "功能名称", minWidth: 80, showOverflowTooltip: true},
+        {prop: "className", label: "类名称", minWidth: 120, showOverflowTooltip: true},
+        {prop: "operationDescription", label: "操作描述", minWidth: 300, showOverflowTooltip: true},
+        {prop: "result", label: "操作结果", minWidth: 50, showOverflowTooltip: true},
+        {prop: "userName", label: "用户名", minWidth: 60, showOverflowTooltip: true},
         {prop: "createTime", label: "创建时间", minWidth: 120, showOverflowTooltip: true},
     ]);
 

@@ -10,8 +10,6 @@ import org.springframework.stereotype.Component;
 @PropertySource("classpath:application.properties")
 public class ApplicationProperty {
 
-    @Value("${front.path}")
-    private String frontPath;
 
     @Value("${spring.mail.username}")
     private String formEmail;
@@ -19,13 +17,6 @@ public class ApplicationProperty {
     @Value("${excel.email.export.address}")
     private String emailExportAddressToExcel;
 
-    public String getFrontPath() {
-        return frontPath;
-    }
-
-    public void setFrontPath(String frontPath) {
-        this.frontPath = frontPath;
-    }
 
     public String getFormEmail() {
         return formEmail;
@@ -42,4 +33,6 @@ public class ApplicationProperty {
     public void setEmailExportAddressToExcel(String emailExportAddressToExcel) {
         this.emailExportAddressToExcel = emailExportAddressToExcel;
     }
+
+
 }

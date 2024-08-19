@@ -56,9 +56,12 @@ public enum ResultCodeEnum {
     ERROR_EMAIL(1010001, "发送邮件异常"),
     WRONG_EMAIL(1010002, "非法的邮件格式"),
     EMAIL_ALREADY_BEEN_REGISTERED(1010003, "邮件已被注册"),
-    NO_RECIPIENT_EMAIL(1010004, "邮件发送失败, 没有收件人电子邮件"),
+    NO_RECIPIENT_EMAIL(1010004, "邮件发送失败, 没有收件人电子邮件或格式有误"),
+    NO_CC_EMAIL(1010007, "邮件发送失败, 抄送人电子邮件格式有误"),
     EMAIL_CONTENT_EMPTY(1010005, "邮件发送失败, 邮件内容为空"),
-    EMAIL_SUBJECT_NOT_SET(1010006, "邮件发送失败，没有设置邮件主题");
+    EMAIL_SUBJECT_NOT_SET(1010006, "邮件发送失败，没有设置邮件主题"),
+    INVALID_CRON_EXPRESSION(1010008, "邮件发送失败，非法的Cron表达式");
+
 
 
 

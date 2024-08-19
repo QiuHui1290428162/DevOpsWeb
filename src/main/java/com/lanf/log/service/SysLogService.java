@@ -1,10 +1,10 @@
-package com.lanf.system.service;
+package com.lanf.log.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.lanf.system.model.SysLog;
-import com.lanf.system.vo.SysLogQueryVo;
+import com.lanf.log.model.SysLog;
+import com.lanf.log.vo.SysLogQueryVo;
 import java.util.List;
 /**
 * @author hy.qiu

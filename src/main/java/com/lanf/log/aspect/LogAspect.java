@@ -18,7 +18,7 @@ import com.lanf.common.helper.JwtHelper;
 import com.lanf.common.utils.IpUtil;
 import com.lanf.log.annotation.Log;
 import com.lanf.log.service.SysOperLogService;
-import com.lanf.system.model.SysOperLog;
+import com.lanf.log.model.SysOperLog;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;

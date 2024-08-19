@@ -1,11 +1,11 @@
-package com.lanf.system.controller;
+package com.lanf.log.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lanf.common.result.Result;
-import com.lanf.system.model.SysLog;
-import com.lanf.system.vo.SysLogQueryVo;
-import com.lanf.system.service.SysLogService;
+import com.lanf.log.model.SysLog;
+import com.lanf.log.vo.SysLogQueryVo;
+import com.lanf.log.service.SysLogService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

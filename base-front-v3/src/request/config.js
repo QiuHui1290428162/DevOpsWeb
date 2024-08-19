@@ -1,7 +1,7 @@
 export default {
   method: 'get',
   // 基础url前缀
-  baseURL: 'http://localhost:5240',
+  baseURL: process.env.VITE_BASE_URL,
   // 请求头信息
   headers: {
     'Content-Type': 'application/json;charset=UTF-8'

@@ -141,7 +141,7 @@ const {t} = useI18n();  // 国际化，提取文本
 const loading = ref(false) // 控制加载状态显示
 const pageRequest = reactive({ // 分页请求参数
   pageNum: 1,
-  pageSize: 10,
+  pageSize: 20,
 })
 const data = ref({}); // 存储从后端加载的数据
 

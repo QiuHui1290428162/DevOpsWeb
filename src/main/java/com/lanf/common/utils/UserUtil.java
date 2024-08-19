@@ -18,20 +18,25 @@ public class UserUtil {
 
     public static String getUserId() {
         HttpServletRequest request = WebUtil.getRequest();
-        String token = request.getHeader("token");
-        if (StringUtils.isEmpty(token)) {
-            token = request.getParameter("token");
+        if (request != null) {
+            String token = request.getHeader("token");
+            if (StringUtils.isEmpty(token)) {
+                token = request.getParameter("token");
+            }
+            String userId = JwtHelper.getUserIds(token);
+            return userId;
         }
-        String userId = JwtHelper.getUserIds(token);
-        return userId;
+        return null;
     }
 
     public static SysUser getUserInfo() {
         String userId = getUserId();
-        RedisTemplate redisTemplate = (RedisTemplate) BeanUtil.getBean("redisTemplate");
-        String result = (String) redisTemplate.opsForValue().get(userId);
-        if (result != null) {
-            return JSON.parseObject(result, SysUser.class);
+        if (StringUtil.isNotNullOrEmptyString(userId)) {
+            RedisTemplate redisTemplate = (RedisTemplate) BeanUtil.getBean("redisTemplate");
+            String result = (String) redisTemplate.opsForValue().get(userId);
+            if (result != null) {
+                return JSON.parseObject(result, SysUser.class);
+            }
         }
         return null;
     }

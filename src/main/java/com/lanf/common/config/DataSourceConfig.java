@@ -82,7 +82,7 @@ public class DataSourceConfig {
         targetDataSources.put("DevOps", dataSourceDevOps);
         targetDataSources.put("HNSX", dataSourceHNSX);
         targetDataSources.put("WHGX", dataSourceWHGX);
-        targetDataSources.put("WHSY", dataSourceWHGX);
+        targetDataSources.put("WHSY", dataSourceWHSY);
         targetDataSources.put("WHGX_MES", dataSourceWHGX_MES);
         targetDataSources.put("GXYT_TEST", dataSourceGXYT_TEST);
         targetDataSources.put("MES_Prod_SX", dataSourceMES_Prod_SX);

@@ -1,5 +1,9 @@
 package com.lanf.tasks.task;
 
+import com.lanf.common.exception.CacheExpiredException;
+import com.lanf.common.info.Constant;
+import com.lanf.common.utils.ValidUtil;
+import com.lanf.log.service.SysLogService;
 import com.lanf.tasks.model.TaskScheduledEmail;
 import com.lanf.tasks.service.EmailService;
 import com.lanf.tasks.service.TaskScheduledEmailService;
@@ -7,6 +11,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Profile;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Recover;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.scheduling.support.CronTrigger;
@@ -18,6 +26,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledFuture;
 
 @Component
+@Profile("prod")  // 只有在prod环境时才启用
 public class ScheduledEmailTask {
 
     private static final Logger logger = LogManager.getLogger(ScheduledEmailTask.class);
@@ -27,6 +36,9 @@ public class ScheduledEmailTask {
 
     @Autowired
     private EmailService emailServiceImpl;
+
+    @Autowired
+    private SysLogService sysLogServiceImpl;
 
     @Qualifier("taskScheduler")//指定装配的类
     @Autowired
@@ -59,7 +71,7 @@ public class ScheduledEmailTask {
         scheduledTasksMap.clear();
 
         for (TaskScheduledEmail task : tasks) {
-            // 检查是否已经调度过该任务
+            // 跳过已经调度过该任务
             if (scheduledTasksMap.containsKey(task.getId())) {
                 continue;
             }
@@ -74,17 +86,45 @@ public class ScheduledEmailTask {
 
     //调度单个任务的方法
     public void scheduleTask(TaskScheduledEmail task) {
+        // 检查 Cron 表达式是否合法
+        if (ValidUtil.isValidCronExpression(task.getScheduledTime())) {
+            //用于定义任务的执行时间
+            CronTrigger cronTrigger = new CronTrigger(task.getScheduledTime());
+            ScheduledFuture<?> scheduledFuture = taskScheduler.schedule(() -> {
+                logger.info("执行邮件发送任务 {}({}): {}", task.getTaskName(),task.getId(), task.getScheduledTime());
 
-        //用于定义任务的执行时间
-        CronTrigger cronTrigger = new CronTrigger(task.getScheduledTime());
-        ScheduledFuture<?> scheduledFuture = taskScheduler.schedule(() -> {
-            logger.info("执行邮件发送任务 {}({}): {}", task.getTaskName(),task.getId(), task.getScheduledTime());
+                ExecTask(task);
+            }, cronTrigger);
 
-            emailServiceImpl.sendMail(task);
-        }, cronTrigger);
+            //记录已执行任务
+            scheduledTasksMap.put(task.getId(), scheduledFuture);
 
-        //记录已执行任务
-        scheduledTasksMap.put(task.getId(), scheduledFuture);
+        }else {
+            sysLogServiceImpl.addLog("定时任务", "发送邮件", "ScheduledEmailTask",
+                    "任务" + task.getTaskName() + "(" + task.getId() + ") : 发送邮件失败，无效的Cron表达式: " + task.getScheduledTime(),
+                    "error", "admin");
+        }
 
+    }
+
+    /**
+     * 多设置一层方法, 用于发送邮件错误时,触发重试机制
+     * &#064;Retryable注解用于指定异常触发重试，设置最大重试次数为3次，每次重试间隔2分钟（120000毫秒）。
+     */
+    @Retryable(include = {CacheExpiredException.class, Exception.class}, maxAttempts = 5, backoff = @Backoff(delay = 120000))
+    public void  ExecTask(TaskScheduledEmail task) {
+        emailServiceImpl.sendMail(task);
+    }
+
+    @Recover
+    public void recover(CacheExpiredException e, TaskScheduledEmail task) {
+        // 记录最终失败日志
+        logger.error("任务{}({}): 邮件发送失败重试3次后仍未成功，错误信息: {}", task.getTaskName(), task.getId(), e.getMessage(), e);
+    }
+
+    @Recover
+    public void recover(Exception e, TaskScheduledEmail task){
+        // 记录最终失败日志
+        logger.error("任务{}({}): 邮件发送失败重试3次后仍未成功，错误信息: {}", task.getTaskName(), task.getId(), e.getMessage(), e);
     }
 }

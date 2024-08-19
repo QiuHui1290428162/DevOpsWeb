@@ -25,7 +25,12 @@ export default defineConfig(({ mode, command }) => {
     },
     // vite 相关配置
     server: {
-      port: 8420  //指定端口号
+      host: '0.0.0.0',  // 允许外部访问
+      port: 8420        // 指定端口号
+    },
+    // 根据不同的环境,传递不同的.env文件里的值
+    define: {
+      'process.env': env
     }
   }
 })

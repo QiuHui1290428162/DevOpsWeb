@@ -1,4 +1,4 @@
-package com.lanf.system.vo;
+package com.lanf.log.vo;
 
 import lombok.Data;
 

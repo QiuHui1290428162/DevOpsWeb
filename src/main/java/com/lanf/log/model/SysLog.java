@@ -1,4 +1,4 @@
-package com.lanf.system.model;
+package com.lanf.log.model;
 
 import com.lanf.model.base.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -13,7 +13,7 @@ import lombok.Data;
 * @date 2024-08-11 17:02:27
 */
 @Data
-@ApiModel(description = "定时任务日志")
+@ApiModel(description = "系统日志")
 @TableName("sys_log")
 public class SysLog extends BaseEntity {
         private static final long serialVersionUID = 1L;
@@ -24,7 +24,7 @@ public class SysLog extends BaseEntity {
         @TableField("function_name")
         private String functionName;
         @ApiModelProperty(value = "类名称")
-        @TableField("class")
+        @TableField("class_name")
         private String className;
         @ApiModelProperty(value = "操作描述")
         @TableField("operation_description")

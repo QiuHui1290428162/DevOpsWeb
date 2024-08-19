@@ -92,7 +92,14 @@
                     <el-input v-model="form.subject" clearable/>
             </el-form-item>
             <el-form-item :label="t('form.scheduledTime')" prop="scheduledTime">
+                <el-row :gutter="10" type="flex" align="middle">
+                  <el-col :span="50">
                     <el-input v-model="form.scheduledTime" clearable/>
+                  </el-col>
+                  <el-col :span="4">
+                    <el-button type="primary" @click="showCronHelp">{{ t('action.help') }}</el-button>
+                  </el-col>
+                </el-row>
             </el-form-item>
             <el-form-item :label="t('form.remarks')" prop="remarks">
                     <el-input v-model="form.remarks" clearable  autosize type="textarea"/>
@@ -184,6 +191,29 @@
         </div>
       </template>
     </el-dialog>
+    <!-- 弹出框，用于显示Cron表达式帮助 -->
+    <el-dialog title="Cron表达式规则" v-model="cronHelpVisible" width="40%">
+      <p>字段解释：</p>
+      <p>第1位: 秒 (秒 0-59 | * )。</p>
+      <p>第2位: 分钟 (分 0-59 | * )，支持间隔指定，例如 0/20。</p>
+      <p>第3位: 小时 (小时 0-23 | * )。</p>
+      <p>第4位: 日期 (日期 1-31 | * | ?)，? 表示不指定，与星期二选一,若星期有数值则日期必须为 "?”</p>
+      <p>第5位: 月份 (月份 1-12 | * )。</p>
+      <p>第6位: 星期 (星期 1-7 | * | ? )，与日期二选一,若日期有数值则星期必须为 "?”</p>
+      <br>
+      <p>特殊字符解释：</p>
+      <p>*：表示任意值。例如，* 在分钟字段表示每分钟。</p>
+      <p>?：仅在日期和星期字段中使用，表示不指定值。</p>
+      <p>/：表示步长。例如，0/20 在分钟字段表示每 20 分钟执行一次。</p>
+      <br>
+      <p>简单案例：</p>
+      <p>0 * * * * ? : 每小时的第 0 分钟执行</p>
+      <p>0 0 9 * * ? : 每天早上 9:00 执行</p>
+      <p>0 0 9 1 * ? : 每月1号早上 9:00 执行</p>
+      <p>0 0/20 9 * * ? : 每天早上 9:00从第0分开始, 每20分执行</p>
+      <p>0 0 9 ? * 1: 每周一早上 9:00 执行</p>
+    </el-dialog>
+
 </template>
 
 <script setup>
@@ -348,8 +378,15 @@ import api, {sendMail} from "@/apis/task/taskScheduledEmail";
                 }
               },
               trigger: 'blur' }],
+            databaseName: [{required: true, message: '请选择数据库', trigger: "blur"}],
         }
     });
+
+    //帮助弹出窗
+    const cronHelpVisible = ref(false);
+    function showCronHelp() {
+      cronHelpVisible.value = true;
+    }
 
     function refreshForm(){
       filters.taskName = '';
@@ -422,17 +459,12 @@ function handleSendEmail(row) {
       showClose: true,
     });
 
-    sendingMail.value = true; // 设置发送状态为真
+    sendingMail.value = true; // 设置发送状态为真, 防止重复发送
+    //调用接口
     sendMail(row.id).then(response => {
       ElMessage({
         message: t("tips.sendEmailSuccess"),
         type: "success",
-        showClose: true,
-      });
-    }).catch((error) => {
-      ElMessage({
-        message: error.message,
-        type: "error",
         showClose: true,
       });
     }).finally(() => {

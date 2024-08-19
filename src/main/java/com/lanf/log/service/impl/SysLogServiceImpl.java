@@ -1,14 +1,14 @@
-package com.lanf.system.service.impl;
+package com.lanf.log.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lanf.common.exception.CacheExpiredException;
 import com.lanf.common.result.ResultCodeEnum;
-import com.lanf.system.mapper.SysLogMapper;
-import com.lanf.system.model.SysLog;
-import com.lanf.system.vo.SysLogQueryVo;
-import com.lanf.system.service.SysLogService;
+import com.lanf.log.mapper.SysLogMapper;
+import com.lanf.log.model.SysLog;
+import com.lanf.log.vo.SysLogQueryVo;
+import com.lanf.log.service.SysLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
