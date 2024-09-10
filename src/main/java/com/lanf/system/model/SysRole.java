@@ -2,7 +2,7 @@ package com.lanf.system.model;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.lanf.model.base.BaseEntity;
+import com.lanf.common.base.BaseEntity;
 import lombok.Data;
 
 

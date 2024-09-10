@@ -1,6 +1,6 @@
 package com.lanf.tasks.service.impl;
 
-import com.lanf.common.exception.CacheExpiredException;
+import com.lanf.common.exception.GlobalExpiredException;
 import com.lanf.common.utils.ExcelUtil;
 import com.lanf.tasks.service.DatabaseExecutorService;
 import org.apache.logging.log4j.LogManager;
@@ -27,10 +27,10 @@ public class DatabaseExecutorServiceImpl implements DatabaseExecutorService {
      *
      * @param query SQL查询语句
      * @return ResultSet 结果集
-     * @throws CacheExpiredException SQL异常
+     * @throws GlobalExpiredException SQL异常
      */
     @Override
-    public String executeQuery(String query) throws CacheExpiredException {
+    public String executeQuery(String query) throws GlobalExpiredException {
         StringBuilder result = new StringBuilder();
         logger.info("准备执行查询语句: {}", query);
         try{
@@ -69,7 +69,7 @@ public class DatabaseExecutorServiceImpl implements DatabaseExecutorService {
         }catch (SQLException e){
             // 记录错误日志
             logger.error("关闭数据库错误: {}", e.getMessage(),e);
-            throw new CacheExpiredException(101001,"执行数据库错误"+e.getMessage(),"DatabaseExecutorService");
+            throw new GlobalExpiredException(101001,"执行数据库错误"+e.getMessage(),"DatabaseExecutorService");
         }
 
         return result.toString();
@@ -80,10 +80,10 @@ public class DatabaseExecutorServiceImpl implements DatabaseExecutorService {
      *
      * @param query SQL查询语句
      * @return ResultSet 结果集
-     * @throws CacheExpiredException SQL异常
+     * @throws GlobalExpiredException SQL异常
      */
     @Override
-    public String executeQueryToExcel(String query, String taskName, String outputDirectory) throws CacheExpiredException {
+    public String executeQueryToExcel(String query, String taskName, String outputDirectory) throws GlobalExpiredException {
         String filePath = "";
         logger.info("准备执行查询语句: {}", query);
         try{
@@ -100,11 +100,11 @@ public class DatabaseExecutorServiceImpl implements DatabaseExecutorService {
         }catch (SQLException e){
             // 记录错误日志
             logger.error("关闭数据库错误: {}", e.getMessage(),e);
-            throw new CacheExpiredException(101001,"执行数据库错误"+e.getMessage(),"DatabaseExecutorService");
+            throw new GlobalExpiredException(101001,"执行数据库错误"+e.getMessage(),"DatabaseExecutorService");
         } catch (IOException e) {
             // 记录错误日志
             logger.error("{} IO文件操作错误: {}", e.getMessage(),e);
-            throw new CacheExpiredException(100014,"IO文件操作错误: "+e.getMessage(),"StoredProcedureServiceImpl");
+            throw new GlobalExpiredException(100014,"IO文件操作错误: "+e.getMessage(),"StoredProcedureServiceImpl");
         }
 
         return filePath;
@@ -115,10 +115,10 @@ public class DatabaseExecutorServiceImpl implements DatabaseExecutorService {
      *
      * @param update SQL更新或插入语句
      * @return int 受影响的行数
-     * @throws CacheExpiredException SQL异常
+     * @throws GlobalExpiredException SQL异常
      */
     @Override
-    public int executeUpdate(String update) throws CacheExpiredException {
+    public int executeUpdate(String update) throws GlobalExpiredException {
 //        try (Connection connection = dataSource.getConnection();
 //             Statement statement = connection.createStatement()) {
 //            return statement.executeUpdate(update);
@@ -130,10 +130,10 @@ public class DatabaseExecutorServiceImpl implements DatabaseExecutorService {
      * 关闭结果集和相关资源
      *
      * @param resultSet ResultSet 结果集
-     * @throws CacheExpiredException SQL异常
+     * @throws GlobalExpiredException SQL异常
      */
     @Override
-    public void close(ResultSet resultSet) throws CacheExpiredException {
+    public void close(ResultSet resultSet) throws GlobalExpiredException {
         try{
             Statement statement = resultSet.getStatement();
             Connection connection = statement.getConnection();
@@ -143,7 +143,7 @@ public class DatabaseExecutorServiceImpl implements DatabaseExecutorService {
         }catch (SQLException e){
             // 记录错误日志
             logger.error("关闭数据库错误: {}", e.getMessage(),e);
-            throw new CacheExpiredException(101001,"执行数据库错误"+e.getMessage(),"DatabaseExecutorService");
+            throw new GlobalExpiredException(101001,"执行数据库错误"+e.getMessage(),"DatabaseExecutorService");
         }
     }
 }

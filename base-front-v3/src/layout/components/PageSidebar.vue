@@ -15,7 +15,7 @@
       <!-- 循环遍历传入的菜单数据 -->
       <template v-for="(item, i) in treeData" :key="i">
         <!-- 为每一个菜单项渲染一个 SidebarMenuItem 组件 -->
-        <sidebar-menu-item :item="item" :t="t" />
+        <sidebar-menu-item :item="item" :t="t" @menu-click="onMenuClick"/>
       </template>
     </el-menu>
   </div>
@@ -36,6 +36,17 @@ const treeData = computed(() =>  store.state.menuTree);
 const defaultActive = computed(() => route.path || treeData.value[0].path)
 //折叠状态的响应式引用，初始为不折叠
 const isCollapse = ref(false)
+
+// 使用 defineEmits 定义事件 'menu-click'
+const emit = defineEmits(['menu-click']);
+// 接收到 SidebarMenuItem 传递上来的 URL
+const onMenuClick = (url) => {
+  if (url) {
+    // 如果是外部链接，折叠侧边栏
+    isCollapse.value = true;
+  }
+  emit('menu-click', url);
+}
 </script>
 
 <style lang="scss">

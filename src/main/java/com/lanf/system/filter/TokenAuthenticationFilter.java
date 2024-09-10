@@ -1,7 +1,7 @@
 package com.lanf.system.filter;
 
 import com.alibaba.fastjson.JSON;
-import com.lanf.common.exception.CacheExpiredException;
+import com.lanf.common.exception.GlobalExpiredException;
 import com.lanf.common.helper.JwtHelper;
 import com.lanf.common.result.Result;
 import com.lanf.common.result.ResultCodeEnum;
@@ -62,7 +62,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         } catch (ExpiredJwtException e) {
             ResponseUtil.out(response, Result.build(null, TOKENEXPIRED));
             return;
-        } catch (CacheExpiredException e) {
+        } catch (GlobalExpiredException e) {
             if (e.getCode().equals(ResultCodeEnum.LOGIN_AUTH.getCode())) {
                 ResponseUtil.out(response, Result.build(null, ResultCodeEnum.LOGIN_AUTH));
                 return;
@@ -84,7 +84,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             token = request.getParameter(HeaderConstant.token);
         }
         if (StringUtils.isEmpty(token)) {
-            throw new CacheExpiredException(ResultCodeEnum.LOGIN_AUTH);
+            throw new GlobalExpiredException(ResultCodeEnum.LOGIN_AUTH);
         }
         logger.info("token:" + token);
         if (!StringUtils.isEmpty(token)) {
@@ -94,7 +94,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
                 String authoritiesString = (String) redisTemplate.opsForValue().get(useruame);
                 //String authoritiesString = (String) CacheMap.get(useruame);
                 if (StringUtils.isEmpty(authoritiesString)) {
-                    throw new CacheExpiredException(ResultCodeEnum.TOKENEXPIRED);
+                    throw new GlobalExpiredException(ResultCodeEnum.TOKENEXPIRED);
                     //ResponseUtil.out(response, Result.build(null, ResultCodeEnum.TOKENEXPIRED));
                 }
                 List<Map> mapList = JSON.parseArray(authoritiesString, Map.class);

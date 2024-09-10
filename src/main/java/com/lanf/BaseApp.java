@@ -9,12 +9,12 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 
 /**
- * @author tanlingfei
+ * 启动类
  * @version 1.0
  * @description TODO
  * @date 2023/5/1 18:30
  */
-@SpringBootApplication
+@SpringBootApplication   //已包含@ComponentScan
 @EnableScheduling   //调度任务
 @EnableRetry   //Spring Retry重试
 public class BaseApp {

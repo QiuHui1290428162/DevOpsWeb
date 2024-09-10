@@ -2,7 +2,7 @@ package com.lanf.system.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.lanf.common.exception.CacheExpiredException;
+import com.lanf.common.exception.GlobalExpiredException;
 import com.lanf.common.result.Result;
 import com.lanf.system.model.SysI18n;
 import com.lanf.system.vo.SysI18nQueryVo;
@@ -147,7 +147,7 @@ public class SysI18nController {
             this.excelHandler.exportExcel(response, expList, SysI18nExportVo.class, "国际化语言数据", "国际化语言数据");
         } catch (Exception e) {
             e.printStackTrace();
-            throw new CacheExpiredException(9005, "导出失败");
+            throw new GlobalExpiredException(9005, "导出失败");
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.lanf.model.base;
+package com.lanf.common.base;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import io.swagger.annotations.ApiModelProperty;

@@ -1,6 +1,6 @@
 package com.lanf.log.model;
 
-import com.lanf.model.base.BaseEntity;
+import com.lanf.common.base.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;

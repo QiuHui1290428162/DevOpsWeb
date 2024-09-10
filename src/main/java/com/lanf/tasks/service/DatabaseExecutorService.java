@@ -2,17 +2,17 @@ package com.lanf.tasks.service;
 
 
 
-import com.lanf.common.exception.CacheExpiredException;
+import com.lanf.common.exception.GlobalExpiredException;
 
 import java.sql.ResultSet;
 
 public interface DatabaseExecutorService {
 
-    public String executeQuery(String query) throws CacheExpiredException;
+    public String executeQuery(String query) throws GlobalExpiredException;
 
-    public String executeQueryToExcel(String query, String taskName, String outputDirectory) throws CacheExpiredException;
+    public String executeQueryToExcel(String query, String taskName, String outputDirectory) throws GlobalExpiredException;
 
-    public int executeUpdate(String update) throws CacheExpiredException;
+    public int executeUpdate(String update) throws GlobalExpiredException;
 
-    public void close(ResultSet resultSet) throws CacheExpiredException;
+    public void close(ResultSet resultSet) throws GlobalExpiredException;
 }

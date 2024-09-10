@@ -11,9 +11,9 @@
     <!-- 遍历子菜单项 -->
     <template v-for="(child, ci) in item.children" :key="ci">
       <!-- 如果子项还有更多子菜单，递归使用 SidebarMenuItem 组件渲染 -->
-      <sidebar-menu-item v-if="child.children && child.children.length > 0" :item="child" :t="t" />
+      <sidebar-menu-item v-if="child.children && child.children.length > 0" :item="child" :t="t"/>
       <!-- 如果没有更多子菜单，使用 el-menu-item 组件渲染普通菜单项 -->
-      <el-menu-item v-else :index="child.path">
+      <el-menu-item v-else :index="child.path" @click="onMenuClick(child)">
         <!-- 如果菜单项有图标，显示图标 -->
         <i v-if="child.icon" :class="'iconfont '+child.icon">&nbsp;&nbsp;</i>
         <!-- 显示菜单项的名称 -->
@@ -36,5 +36,22 @@ export default {
       required: true,
     },
   },
+  methods: {
+    // 检查URL是否为HTTP(S)网址
+    isHttpUrl(url) {
+      return /^(http|https):\/\//.test(url);
+    },
+    // 菜单项点击事件
+    onMenuClick(item) {
+      // 判断 菜单路径 是否存在并且是一个 http/https 网址
+      if (item.component && this.isHttpUrl(item.component)) {
+        // 触发事件，将符合条件的 item.component 传递给父组件
+        this.$emit('menu-click', item.component);
+      } else {
+        // 否则，传递 null，表示使用本地组件
+        this.$emit('menu-click', null);
+      }
+    }
+  }
 };
 </script>

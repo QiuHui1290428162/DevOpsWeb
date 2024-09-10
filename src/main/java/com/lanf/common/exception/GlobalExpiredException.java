@@ -4,11 +4,11 @@ import com.lanf.common.result.ResultCodeEnum;
 import lombok.Data;
 
 /**
- * cache 失效异常处理类
+ * Global 自定义全局异常类
  *
  */
 @Data
-public class CacheExpiredException extends RuntimeException {
+public class GlobalExpiredException extends RuntimeException {
 
     private Integer code;
 
@@ -24,25 +24,25 @@ public class CacheExpiredException extends RuntimeException {
      * @param code
      * @param message
      */
-    public CacheExpiredException(Integer code, String message) {
+    public GlobalExpiredException(Integer code, String message) {
         super(message);
         this.code = code;
         this.message = message;
     }
 
-    public CacheExpiredException(Integer code, String message, Exception e) {
+    public GlobalExpiredException(Integer code, String message, Exception e) {
         this.code = code;
         this.message = message;
         this.exception = e;
     }
 
-    public CacheExpiredException(Integer code, String message, String className) {
+    public GlobalExpiredException(Integer code, String message, String className) {
         this.code = code;
         this.message = message;
         this.className = className;
     }
 
-    public CacheExpiredException(Integer code, String message, String className, Exception e) {
+    public GlobalExpiredException(Integer code, String message, String className, Exception e) {
         this.code = code;
         this.message = message;
         this.className = className;
@@ -54,21 +54,21 @@ public class CacheExpiredException extends RuntimeException {
      *
      * @param resultCodeEnum
      */
-    public CacheExpiredException(ResultCodeEnum resultCodeEnum) {
+    public GlobalExpiredException(ResultCodeEnum resultCodeEnum) {
         super(resultCodeEnum.getMessage());
         this.code = resultCodeEnum.getCode();
         this.message = resultCodeEnum.getMessage();
     }
 
-    public CacheExpiredException(ResultCodeEnum resultCodeEnum, Exception e) {
+    public GlobalExpiredException(ResultCodeEnum resultCodeEnum, Exception e) {
         this(resultCodeEnum.getCode(), resultCodeEnum.getMessage(),e);
     }
 
-    public CacheExpiredException(ResultCodeEnum resultCodeEnum,String className) {
+    public GlobalExpiredException(ResultCodeEnum resultCodeEnum, String className) {
         this(resultCodeEnum.getCode(), resultCodeEnum.getMessage(),className);
     }
 
-    public CacheExpiredException(ResultCodeEnum resultCodeEnum,String className, Exception e) {
+    public GlobalExpiredException(ResultCodeEnum resultCodeEnum, String className, Exception e) {
         this(resultCodeEnum.getCode(), resultCodeEnum.getMessage(),className,e);
     }
 

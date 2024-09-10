@@ -1,6 +1,6 @@
 package com.lanf.common.helper;
 
-import com.lanf.model.base.TreeEntity;
+import com.lanf.common.base.TreeEntity;
 
 import java.util.ArrayList;
 import java.util.List;

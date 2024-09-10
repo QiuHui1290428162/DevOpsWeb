@@ -1,13 +1,12 @@
 package com.lanf.system.model;
 
-import com.lanf.model.base.BaseEntity;
+import com.lanf.common.base.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import java.util.List;
-import org.springframework.web.multipart.MultipartFile;
+
 /**
 * @author tanlingfei
 * @version 1.0

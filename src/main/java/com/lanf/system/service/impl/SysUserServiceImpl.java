@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.lanf.common.exception.CacheExpiredException;
+import com.lanf.common.exception.GlobalExpiredException;
 import com.lanf.common.utils.MD5;
 import com.lanf.system.model.SysDept;
 import com.lanf.system.model.SysUser;
@@ -150,10 +150,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     public void changePwd(SysPwdVo sysPwdVo) {
         SysUser sysUser = this.getById(UserUtil.getUserId());
         if (!MD5.encrypt(sysPwdVo.getPassword()).equals(sysUser.getPassword())) {
-            throw new CacheExpiredException(5240, "旧密码错误");
+            throw new GlobalExpiredException(5240, "旧密码错误");
         }
         if (!sysPwdVo.getCfpassword().equals(sysPwdVo.getNpassword())) {
-            throw new CacheExpiredException(5240, "两次密码不一致");
+            throw new GlobalExpiredException(5240, "两次密码不一致");
         }
         sysUser.setPassword(MD5.encrypt(sysPwdVo.getCfpassword()));
         this.updateById(sysUser);

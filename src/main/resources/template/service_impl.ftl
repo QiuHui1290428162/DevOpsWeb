@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import com.lanf.common.result.ResultCodeEnum;
-import com.lanf.common.exception.CacheExpiredException;
+import com.lanf.common.exception.GlobalExpiredException;
 <#if isGenDept=='true' || isGenLeftDept=='true'>
 import com.lanf.common.utils.UserUtil;
 import org.springframework.util.CollectionUtils;
@@ -29,7 +29,7 @@ import java.util.function.Function;
 </#if>
 </#list>
 <#if genType=='1'>
-import com.lanf.model.base.TreeEntity;
+import com.lanf.common.base.TreeEntity;
 import com.lanf.common.helper.TreeHelper;
 import org.springframework.util.CollectionUtils;
 import java.io.Serializable;

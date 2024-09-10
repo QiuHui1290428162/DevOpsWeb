@@ -1,7 +1,6 @@
 package com.lanf.tasks.task;
 
-import com.lanf.common.exception.CacheExpiredException;
-import com.lanf.common.info.Constant;
+import com.lanf.common.exception.GlobalExpiredException;
 import com.lanf.common.utils.ValidUtil;
 import com.lanf.log.service.SysLogService;
 import com.lanf.tasks.model.TaskScheduledEmail;
@@ -26,7 +25,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledFuture;
 
 @Component
-@Profile("prod")  // 只有在prod环境时才启用
+@Profile("dev")  // 只有在prod环境时才启用
 public class ScheduledEmailTask {
 
     private static final Logger logger = LogManager.getLogger(ScheduledEmailTask.class);
@@ -111,13 +110,13 @@ public class ScheduledEmailTask {
      * 多设置一层方法, 用于发送邮件错误时,触发重试机制
      * &#064;Retryable注解用于指定异常触发重试，设置最大重试次数为3次，每次重试间隔2分钟（120000毫秒）。
      */
-    @Retryable(include = {CacheExpiredException.class, Exception.class}, maxAttempts = 5, backoff = @Backoff(delay = 120000))
+    @Retryable(include = {GlobalExpiredException.class, Exception.class}, maxAttempts = 5, backoff = @Backoff(delay = 120000))
     public void  ExecTask(TaskScheduledEmail task) {
         emailServiceImpl.sendMail(task);
     }
 
     @Recover
-    public void recover(CacheExpiredException e, TaskScheduledEmail task) {
+    public void recover(GlobalExpiredException e, TaskScheduledEmail task) {
         // 记录最终失败日志
         logger.error("任务{}({}): 邮件发送失败重试3次后仍未成功，错误信息: {}", task.getTaskName(), task.getId(), e.getMessage(), e);
     }

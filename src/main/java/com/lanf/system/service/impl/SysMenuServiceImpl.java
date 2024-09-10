@@ -2,7 +2,7 @@ package com.lanf.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.lanf.common.exception.CacheExpiredException;
+import com.lanf.common.exception.GlobalExpiredException;
 import com.lanf.common.result.ResultCodeEnum;
 import com.lanf.system.model.SysMenu;
 import com.lanf.system.model.SysRoleMenu;
@@ -66,7 +66,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     public boolean removeById(Serializable id) {
         int count = this.count(new QueryWrapper<SysMenu>().eq("parent_id", id));
         if (count > 0) {
-            throw new CacheExpiredException(ResultCodeEnum.NODE_ERROR);
+            throw new GlobalExpiredException(ResultCodeEnum.NODE_ERROR);
         }
         sysMenuMapper.deleteById(id);
         return false;

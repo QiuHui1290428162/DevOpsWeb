@@ -15,6 +15,15 @@ import java.util.Date;
 
 public class ExcelUtil {
 
+    /**
+     *
+     * @param resultSet       数据库结果集
+     * @param tableName       表名称
+     * @param outputDirectory 输出目录
+     * @return
+     * @throws SQLException
+     * @throws IOException
+     */
     public static String generateExcel(ResultSet resultSet, String tableName,String outputDirectory) throws SQLException, IOException {
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("Result");

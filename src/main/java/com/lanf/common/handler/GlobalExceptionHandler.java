@@ -1,6 +1,6 @@
 package com.lanf.common.handler;
 
-import com.lanf.common.exception.CacheExpiredException;
+import com.lanf.common.exception.GlobalExpiredException;
 import com.lanf.common.result.Result;
 import com.lanf.common.result.ResultCodeEnum;
 import org.apache.logging.log4j.LogManager;
@@ -52,10 +52,10 @@ public class GlobalExceptionHandler {
     }
 
     //拦截业务异常
-    @ExceptionHandler(CacheExpiredException.class)
+    @ExceptionHandler(GlobalExpiredException.class)
     @ResponseBody
-    public Result error(CacheExpiredException e){
-        logger.error("CacheExpiredException", e);
+    public Result error(GlobalExpiredException e){
+        logger.error("GlobalExpiredException", e);
         return Result.fail(e.getCode(), e.getMessage());
     }
 

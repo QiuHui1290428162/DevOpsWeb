@@ -66,8 +66,7 @@ public class DataSourceConfig {
     }
 
     @Bean
-    @Primary  // @Primary 注解指定一个默认数据源。
-    @Lazy     //懒加载,延迟该 Bean初始化, 避免与H2数据源冲突
+    @Primary  // @Primary 注解指定一个默认数据源
     @DependsOn({"DevOps", "HNSX", "WHGX", "WHSY", "WHGX_MES", "GXYT_TEST", "MES_Prod_SX", "MES_SX"}) //指定加载顺序
     public DynamicDataSource dataSource(@Qualifier("HNSX") DataSource dataSourceHNSX,
                                         @Qualifier("WHGX") DataSource dataSourceWHGX,

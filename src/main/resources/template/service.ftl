@@ -7,7 +7,7 @@ import ${packageName}.model.${modelName};
 import ${packageName}.vo.${modelName}QueryVo;
 import java.util.List;
 <#if genType=='1'>
-import com.lanf.model.base.TreeEntity;
+import com.lanf.common.base.TreeEntity;
 import java.io.Serializable;
 </#if>
 /**

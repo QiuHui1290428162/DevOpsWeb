@@ -3,7 +3,7 @@ package com.lanf.common.easyexcel;
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;
 import com.alibaba.excel.exception.ExcelDataConvertException;
-import com.lanf.common.exception.CacheExpiredException;
+import com.lanf.common.exception.GlobalExpiredException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +52,7 @@ public class UploadDataListener<T> extends AnalysisEventListener<T> {
         // 数据解析异常
         if (exception instanceof ExcelDataConvertException) {
             ExcelDataConvertException excelDataConvertException = (ExcelDataConvertException) exception;
-            throw new CacheExpiredException(9001, "第" + excelDataConvertException.getRowIndex() + "行" + excelDataConvertException.getColumnIndex() + "列" + "数据解析异常");
+            throw new GlobalExpiredException(9001, "第" + excelDataConvertException.getRowIndex() + "行" + excelDataConvertException.getColumnIndex() + "列" + "数据解析异常");
         }
         // 其他异常...
     }

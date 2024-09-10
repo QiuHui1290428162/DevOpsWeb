@@ -1,7 +1,7 @@
 package com.lanf.tasks.service.impl;
 
 
-import com.lanf.common.exception.CacheExpiredException;
+import com.lanf.common.exception.GlobalExpiredException;
 import com.lanf.common.utils.ExcelUtil;
 import com.lanf.tasks.service.StoredProcedureService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ public class StoredProcedureServiceImpl implements StoredProcedureService {
      * @param storedProcedureName  储存过程名称
      * @return
      */
-    public String executeStoredProcedure(String storedProcedureName) throws CacheExpiredException {
+    public String executeStoredProcedure(String storedProcedureName) throws GlobalExpiredException {
         StringBuilder result = new StringBuilder();
 
         // 提取存储过程名和参数
@@ -114,7 +114,7 @@ public class StoredProcedureServiceImpl implements StoredProcedureService {
         } catch (SQLException e) {
             // 记录错误日志
             logger.error("{}执行数据库错误: {}", procedureName,e.getMessage(),e);
-            throw new CacheExpiredException(101001,"执行数据库错误"+e.getMessage(),"StoredProcedureServiceImpl");
+            throw new GlobalExpiredException(101001,"执行数据库错误"+e.getMessage(),"StoredProcedureServiceImpl");
 
         }
         return result.toString();
@@ -127,7 +127,7 @@ public class StoredProcedureServiceImpl implements StoredProcedureService {
      * @return
      */
     @Override
-    public String exportStoredProcedureToExcel(String storedProcedureName, String taskName, String outputDirectory)throws CacheExpiredException {
+    public String exportStoredProcedureToExcel(String storedProcedureName, String taskName, String outputDirectory)throws GlobalExpiredException {
         String filePath = "";
 
         // 提取存储过程名和参数
@@ -169,7 +169,7 @@ public class StoredProcedureServiceImpl implements StoredProcedureService {
                         } catch (IOException e) {
                             // 记录错误日志
                             logger.error("{} IO文件操作错误: {}", procedureName,e.getMessage(),e);
-                            throw new CacheExpiredException(100014,"IO文件操作错误: "+e.getMessage(),"StoredProcedureServiceImpl");
+                            throw new GlobalExpiredException(100014,"IO文件操作错误: "+e.getMessage(),"StoredProcedureServiceImpl");
                         }
                         break; // 如果找到了结果集，则跳出循环
                     }else {
@@ -186,7 +186,7 @@ public class StoredProcedureServiceImpl implements StoredProcedureService {
         } catch (SQLException e) {
             // 记录错误日志
             logger.error("{}执行数据库错误: {}", procedureName,e.getMessage(),e);
-            throw new CacheExpiredException(101001,"执行数据库错误: "+e.getMessage(),"StoredProcedureServiceImpl");
+            throw new GlobalExpiredException(101001,"执行数据库错误: "+e.getMessage(),"StoredProcedureServiceImpl");
         }
         return filePath;
     }
@@ -224,7 +224,7 @@ public class StoredProcedureServiceImpl implements StoredProcedureService {
     }
 
     @Override
-    public void close(ResultSet resultSet) throws CacheExpiredException {
+    public void close(ResultSet resultSet) throws GlobalExpiredException {
         try{
             Statement statement = resultSet.getStatement();
             Connection connection = statement.getConnection();
@@ -234,7 +234,7 @@ public class StoredProcedureServiceImpl implements StoredProcedureService {
         }catch (SQLException e){
             // 记录错误日志
             logger.error("关闭数据库错误: {}", e.getMessage(),e);
-            throw new CacheExpiredException(101001,"执行数据库错误"+e.getMessage(),"DatabaseExecutorService");
+            throw new GlobalExpiredException(101001,"执行数据库错误"+e.getMessage(),"DatabaseExecutorService");
         }
     }
 }

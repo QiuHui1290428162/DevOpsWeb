@@ -6,7 +6,7 @@ import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.read.builder.ExcelReaderBuilder;
 import com.alibaba.excel.write.metadata.WriteSheet;
 import com.alibaba.excel.write.metadata.fill.FillConfig;
-import com.lanf.common.exception.CacheExpiredException;
+import com.lanf.common.exception.GlobalExpiredException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -59,7 +59,7 @@ public class ExcelHandler {
      */
     public <T> List<List<T>> importExcelsByIndex(MultipartFile multipartFile, List<T> objList, int index, List<Integer> indexList) throws Exception {
         if (multipartFile == null) {
-            throw new CacheExpiredException(9002, "文件为空");
+            throw new GlobalExpiredException(9002, "文件为空");
         }
         List<List<T>> resultList = new LinkedList<>();
         //初始化导入sheet页实体类型下标
@@ -278,15 +278,15 @@ public class ExcelHandler {
      */
     private void checkFile(MultipartFile file) {
         if (file == null) {
-            throw new CacheExpiredException(9002, "文件不能为空");
+            throw new GlobalExpiredException(9002, "文件不能为空");
         }
         String fileName = file.getOriginalFilename();
         if (StringUtils.isEmpty(fileName)) {
-            throw new CacheExpiredException(9002, "文件不能为空");
+            throw new GlobalExpiredException(9002, "文件不能为空");
         }
         if (!fileName.endsWith(ExcelTemplateEnum.TEMPLATE_SUFFIX.getDesc())
                 && !fileName.endsWith(ExcelTemplateEnum.TEMPLATE_SUFFIX_XLS.getDesc())) {
-            throw new CacheExpiredException(9003, "请上传.xlsx或.xls文件");
+            throw new GlobalExpiredException(9003, "请上传.xlsx或.xls文件");
         }
     }
 

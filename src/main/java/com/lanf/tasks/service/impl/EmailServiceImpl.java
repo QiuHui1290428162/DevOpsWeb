@@ -1,8 +1,8 @@
 package com.lanf.tasks.service.impl;
 
 import com.lanf.common.config.DynamicDataSource;
+import com.lanf.common.exception.GlobalExpiredException;
 import com.lanf.common.info.ApplicationProperty;
-import com.lanf.common.info.Constant;
 import com.lanf.common.utils.EmailUtil;
 import com.lanf.common.utils.StringUtil;
 import com.lanf.common.utils.ValidUtil;
@@ -15,11 +15,7 @@ import com.lanf.tasks.service.StoredProcedureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.retry.annotation.Backoff;
-import org.springframework.retry.annotation.Recover;
-import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
-import com.lanf.common.exception.CacheExpiredException;
 import com.lanf.common.result.ResultCodeEnum;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -28,7 +24,6 @@ import org.springframework.core.io.FileSystemResource;
 
 import javax.mail.internet.MimeMessage;
 import java.io.File;
-import java.util.Arrays;
 
 @Service
 public class EmailServiceImpl implements EmailService {
@@ -62,7 +57,7 @@ public class EmailServiceImpl implements EmailService {
      * @param filePath  附件路径
      */
     @Override
-    public void sendMail(String RecipientEmail, String ccEmail, String subject, String Body, String filePath) throws CacheExpiredException{
+    public void sendMail(String RecipientEmail, String ccEmail, String subject, String Body, String filePath) throws GlobalExpiredException {
 //        logger.info("发送邮件参数:\nfrom:{},\nRecipientEmail:{},\nccEmail:{},\nsubject:{},\nBody:{},\nfilePath:{}"
 //                , applicationProperty.getFormEmail(),RecipientEmail,ccEmail,subject,(Body.length() > 1000 ? Body.substring(0, 1000) : Body),filePath);
 
@@ -76,7 +71,7 @@ public class EmailServiceImpl implements EmailService {
                 message.setTo(recipientEmails);
             }else {
                 //没有收件人直接结束进程
-                throw new CacheExpiredException(ResultCodeEnum.NO_RECIPIENT_EMAIL);
+                throw new GlobalExpiredException(ResultCodeEnum.NO_RECIPIENT_EMAIL);
             }
 
             // 设置抄送人
@@ -86,7 +81,7 @@ public class EmailServiceImpl implements EmailService {
                     message.setCc(ccEmails);
                 }else {
                     //没有收件人直接结束进程
-                    throw new CacheExpiredException(ResultCodeEnum.NO_CC_EMAIL);
+                    throw new GlobalExpiredException(ResultCodeEnum.NO_CC_EMAIL);
                 }
             }
 
@@ -95,14 +90,14 @@ public class EmailServiceImpl implements EmailService {
                 message.setSubject(subject);
             }else{
                 //没有设置邮件主题, 直接结束进程
-                throw new CacheExpiredException(ResultCodeEnum.EMAIL_SUBJECT_NOT_SET);
+                throw new GlobalExpiredException(ResultCodeEnum.EMAIL_SUBJECT_NOT_SET);
             }
 
             if (StringUtil.isNotNullOrEmptyString(Body)) {
                 message.setText(Body, true); // 第二个参数为 true 表示内容为 HTML 格式
             }else {
                 //没有设置邮件内容, 直接结束进程
-                throw new CacheExpiredException(ResultCodeEnum.EMAIL_CONTENT_EMPTY);
+                throw new GlobalExpiredException(ResultCodeEnum.EMAIL_CONTENT_EMPTY);
             }
 
             message.setFrom(applicationProperty.getFormEmail(), "系统管理员");
@@ -114,14 +109,14 @@ public class EmailServiceImpl implements EmailService {
                     String fileName = file.getFilename();
                     message.addAttachment(fileName, file);
                 } else {
-                    throw new CacheExpiredException(1002002,"邮件("+subject+"): 该路径下未找到文件, "+filePath);
+                    throw new GlobalExpiredException(1002002,"邮件("+subject+"): 该路径下未找到文件, "+filePath);
                 }
             }
 
             // 发送邮件
             mailSender.send(mimeMessage);
         } catch (Exception e) {
-            throw new CacheExpiredException(110000,"邮件发送失败,错误原因: "+e.getMessage());
+            throw new GlobalExpiredException(110000,"邮件发送失败,错误原因: "+e.getMessage());
         }
     }
 
@@ -133,18 +128,18 @@ public class EmailServiceImpl implements EmailService {
         // 检查 Cron 表达式是否合法
         if (!task.getScheduledTime().equals("0 0 0 0 0 0")&&!ValidUtil.isValidCronExpression(task.getScheduledTime())) {
             // 如果不合法直接抛异常
-            throw new CacheExpiredException(ResultCodeEnum.INVALID_CRON_EXPRESSION);
+            throw new GlobalExpiredException(ResultCodeEnum.INVALID_CRON_EXPRESSION);
         }
 
         String bodyContent = "";
         if (task == null) {
-            throw new CacheExpiredException(ResultCodeEnum.PARA_NOT_NULL);
+            throw new GlobalExpiredException(ResultCodeEnum.PARA_NOT_NULL);
         }
         //查询邮件内容是否为空
         if (StringUtil.isNotNullOrEmptyString(task.getBody())){
             bodyContent = task.getBody();
         }else{
-            throw new CacheExpiredException(ResultCodeEnum.EMAIL_CONTENT_EMPTY);
+            throw new GlobalExpiredException(ResultCodeEnum.EMAIL_CONTENT_EMPTY);
         }
 
         {
@@ -166,7 +161,7 @@ public class EmailServiceImpl implements EmailService {
             //查询结果是否为空
             if (StringUtil.isNullOrEmptyString(bodyContent)){
 
-                throw new CacheExpiredException(ResultCodeEnum.STORED_PROCEDURE_NOT_FOUND_OR_EMPTY_RESULT);
+                throw new GlobalExpiredException(ResultCodeEnum.STORED_PROCEDURE_NOT_FOUND_OR_EMPTY_RESULT);
             }
 
             String filePath = "";

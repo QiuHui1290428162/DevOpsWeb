@@ -3,7 +3,7 @@ package com.lanf.tasks.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.lanf.common.exception.CacheExpiredException;
+import com.lanf.common.exception.GlobalExpiredException;
 import com.lanf.tasks.model.TaskScheduledEmail;
 import com.lanf.tasks.vo.TaskScheduledEmailQueryVo;
 import com.lanf.tasks.mapper.TaskScheduledEmailMapper;
@@ -54,7 +54,7 @@ public class TaskScheduledEmailServiceImpl extends ServiceImpl
     public boolean updateById(TaskScheduledEmail taskScheduledEmail){
         int row = this.taskScheduledEmailMapper.updateById(taskScheduledEmail);
         if(row <= 0){
-            throw new CacheExpiredException(ResultCodeEnum.UPDATE_ERROR);
+            throw new GlobalExpiredException(ResultCodeEnum.UPDATE_ERROR);
          }
         return row>0;
     }
@@ -73,7 +73,7 @@ public class TaskScheduledEmailServiceImpl extends ServiceImpl
     public boolean removeByIds (List<String> ids){
         int row = this.taskScheduledEmailMapper.removeByIds(ids);
         if(row <= 0){
-            throw new CacheExpiredException(ResultCodeEnum.DELETE_ERROR);
+            throw new GlobalExpiredException(ResultCodeEnum.DELETE_ERROR);
          }
         return row>0;
     }

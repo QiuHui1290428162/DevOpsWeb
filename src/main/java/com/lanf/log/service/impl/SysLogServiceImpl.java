@@ -3,7 +3,7 @@ package com.lanf.log.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.lanf.common.exception.CacheExpiredException;
+import com.lanf.common.exception.GlobalExpiredException;
 import com.lanf.common.result.ResultCodeEnum;
 import com.lanf.log.mapper.SysLogMapper;
 import com.lanf.log.model.SysLog;
@@ -53,7 +53,7 @@ public class SysLogServiceImpl extends ServiceImpl
     public boolean addLog(String module, String FunctionName, String ClassName, String OperationDescription, String Result, String UserName) {
         int row = sysLogMapper.addLog(module,FunctionName,ClassName,OperationDescription,Result,UserName);
         if(row <= 0){
-            throw new CacheExpiredException(ResultCodeEnum.UPDATE_ERROR);
+            throw new GlobalExpiredException(ResultCodeEnum.UPDATE_ERROR);
         }
         return row>0;
     }

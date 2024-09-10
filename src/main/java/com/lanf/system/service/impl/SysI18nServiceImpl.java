@@ -3,7 +3,7 @@ package com.lanf.system.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.lanf.common.exception.CacheExpiredException;
+import com.lanf.common.exception.GlobalExpiredException;
 import com.lanf.common.result.ResultCodeEnum;
 import com.lanf.system.mapper.SysI18nMapper;
 import com.lanf.system.model.SysI18n;
@@ -50,7 +50,7 @@ public class SysI18nServiceImpl extends ServiceImpl
     public boolean updateById(SysI18n sysI18n) {
         int row = this.sysI18nMapper.updateById(sysI18n);
         if (row <= 0) {
-            throw new CacheExpiredException(ResultCodeEnum.UPDATE_ERROR);
+            throw new GlobalExpiredException(ResultCodeEnum.UPDATE_ERROR);
         }
         return row > 0;
     }
